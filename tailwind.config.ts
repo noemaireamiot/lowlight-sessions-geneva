@@ -52,16 +52,30 @@ export default {
 					DEFAULT: 'hsl(var(--card))',
 					foreground: 'hsl(var(--card-foreground))'
 				},
-				sidebar: {
-					DEFAULT: 'hsl(var(--sidebar-background))',
-					foreground: 'hsl(var(--sidebar-foreground))',
-					primary: 'hsl(var(--sidebar-primary))',
-					'primary-foreground': 'hsl(var(--sidebar-primary-foreground))',
-					accent: 'hsl(var(--sidebar-accent))',
-					'accent-foreground': 'hsl(var(--sidebar-accent-foreground))',
-					border: 'hsl(var(--sidebar-border))',
-					ring: 'hsl(var(--sidebar-ring))'
+				// Lowlight Sessions Brand Colors
+				lowlight: {
+					deep: 'hsl(var(--lowlight-deep))',
+					charcoal: 'hsl(var(--lowlight-charcoal))',
+					amber: 'hsl(var(--lowlight-amber))',
+					cream: 'hsl(var(--lowlight-cream))',
+					'amber-glow': 'hsl(var(--lowlight-amber-glow))',
+					smoke: 'hsl(var(--lowlight-smoke))'
 				}
+			},
+			backgroundImage: {
+				'gradient-hero': 'var(--gradient-hero)',
+				'gradient-amber': 'var(--gradient-amber)',
+				'gradient-overlay': 'var(--gradient-overlay)',
+				'gradient-card': 'var(--gradient-card)'
+			},
+			boxShadow: {
+				'amber': 'var(--shadow-amber)',
+				'deep': 'var(--shadow-deep)',
+				'glow': 'var(--glow-amber)'
+			},
+			fontFamily: {
+				serif: ['var(--font-serif)'],
+				sans: ['var(--font-sans)']
 			},
 			borderRadius: {
 				lg: 'var(--radius)',
