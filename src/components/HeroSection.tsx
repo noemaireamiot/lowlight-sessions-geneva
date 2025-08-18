@@ -73,14 +73,14 @@ const HeroSection = () => {
           >
             <button
               onClick={scrollToSessions}
-              className="btn-hero text-lg px-8 py-4"
+              className="btn-hero text-lg px-8 py-4 w-[300px]"
             >
               See the upcoming sessions
             </button>
 
             <button
               onClick={scrollToPastSessions}
-              className="btn-ghost text-lg px-8 py-4"
+              className="btn-ghost text-lg px-1 py-4 w-[300px]"
             >
               Discover the previous sessions
             </button>
