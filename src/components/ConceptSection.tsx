@@ -1,27 +1,30 @@
-import { motion } from 'framer-motion';
-import { Music, Heart, MapPin } from 'lucide-react';
+import { motion } from "framer-motion";
+import { Music, Heart, MapPin } from "lucide-react";
 
 const ConceptSection = () => {
   const features = [
     {
       icon: Music,
-      title: 'Acoustique intimiste',
-      description: 'Des concerts en petit comité pour une expérience musicale unique'
+      title: "Intimate acoustics",
+      description: "Small-group concerts for a unique musical experience",
     },
     {
       icon: Heart,
-      title: 'Ambiance chaleureuse',
-      description: 'Lumière tamisée et atmosphère cosy sur les toits genevois'
+      title: "Warm atmosphere",
+      description: "Dim lighting and cozy atmosphere on Geneva",
     },
     {
       icon: MapPin,
-      title: 'Lieux secrets',
-      description: 'Rooftops privés avec vues exceptionnelles sur Genève'
-    }
+      title: "Secret venues",
+      description: "Private concerts with secret locations",
+    },
   ];
 
   return (
-    <section id="concept" className="py-20 px-6 bg-gradient-to-b from-background to-lowlight-charcoal">
+    <section
+      id="concept"
+      className="py-20 md:px-6 bg-gradient-to-b from-background to-lowlight-charcoal"
+    >
       <div className="container mx-auto max-w-4xl">
         <motion.div
           className="text-center mb-16"
@@ -31,17 +34,21 @@ const ConceptSection = () => {
           viewport={{ once: true }}
         >
           <h2 className="text-4xl md:text-5xl font-serif font-light text-gradient mb-6">
-            Le Concept
+            The Concept
           </h2>
           <div className="space-y-6 text-lg text-muted-foreground max-w-3xl mx-auto">
             <p>
-              The Lowlight Sessions réinvente l'expérience du concert en créant des moments d'intimité musicale sur les plus beaux rooftops de Genève.
+              The Lowlight Sessions reinvents the concert experience by creating
+              moments of musical intimacy in Geneva.
             </p>
             <p>
-              Chaque session est pensée comme une parenthèse enchantée où la musique rencontre l'architecture urbaine, sous les étoiles genevoises.
+              Each session is designed as an enchanted interlude where music
+              meets urban architecture, under the Geneva stars.
             </p>
             <p>
-              Avec une jauge volontairement réduite et une attention particulière portée à l'ambiance, nous créons des souvenirs uniques pour les mélomanes en quête d'authenticité.
+              With a deliberately limited capacity and special attention to
+              ambiance, we create unique memories for music lovers seeking
+              authenticity.
             </p>
           </div>
         </motion.div>
@@ -59,7 +66,9 @@ const ConceptSection = () => {
               <div className="w-16 h-16 mx-auto mb-4 bg-gradient-amber rounded-full flex items-center justify-center shadow-amber">
                 <feature.icon className="w-8 h-8 text-primary-foreground" />
               </div>
-              <h3 className="text-xl font-serif text-primary mb-3">{feature.title}</h3>
+              <h3 className="text-xl font-serif text-primary mb-3">
+                {feature.title}
+              </h3>
               <p className="text-muted-foreground">{feature.description}</p>
             </motion.div>
           ))}

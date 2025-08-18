@@ -1,35 +1,38 @@
-import { motion } from 'framer-motion';
-import heroBackground from '@/assets/hero-background.jpg';
+import { motion } from "framer-motion";
+import heroBackground from "@/assets/hero-background.jpg";
 
 const HeroSection = () => {
-  const scrollToBooking = () => {
-    const element = document.getElementById('booking');
+  const scrollToPastSessions = () => {
+    const element = document.getElementById("past-sessions");
     if (element) {
-      element.scrollIntoView({ behavior: 'smooth' });
+      element.scrollIntoView({ behavior: "smooth" });
     }
   };
 
   const scrollToSessions = () => {
-    const element = document.getElementById('sessions');
+    const element = document.getElementById("sessions");
     if (element) {
-      element.scrollIntoView({ behavior: 'smooth' });
+      element.scrollIntoView({ behavior: "smooth" });
     }
   };
 
   return (
-    <section id="home" className="relative min-h-screen flex items-center justify-center overflow-hidden">
+    <section
+      id="home"
+      className="relative min-h-screen flex items-center justify-center overflow-hidden"
+    >
       {/* Background Image with Overlay */}
       <div className="absolute inset-0 z-0">
         <img
           src={heroBackground}
-          alt="Intimate rooftop concert in Geneva"
+          alt="Intimate concert in Geneva"
           className="w-full h-full object-cover"
         />
         <div className="absolute inset-0 bg-gradient-overlay"></div>
       </div>
 
       {/* Content */}
-      <div className="relative z-10 text-center px-6 max-w-4xl mx-auto">
+      <div className="relative z-10 text-center px-3 md:px-6 max-w-4xl mx-auto">
         <motion.div
           initial={{ opacity: 0, y: 50 }}
           animate={{ opacity: 1, y: 0 }}
@@ -59,7 +62,7 @@ const HeroSection = () => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.8 }}
           >
-            Des concerts intimistes sur les plus beaux rooftops genevois
+            The performers? A secret - until the lights go up!
           </motion.p>
 
           <motion.div
@@ -69,33 +72,32 @@ const HeroSection = () => {
             transition={{ duration: 0.8, delay: 1 }}
           >
             <button
-              onClick={scrollToBooking}
+              onClick={scrollToSessions}
               className="btn-hero text-lg px-8 py-4"
             >
-              Réserver la prochaine session
+              See the upcoming sessions
             </button>
-            
+
             <button
-              onClick={scrollToSessions}
+              onClick={scrollToPastSessions}
               className="btn-ghost text-lg px-8 py-4"
             >
-              Découvrir les sessions
+              Discover the previous sessions
             </button>
           </motion.div>
         </motion.div>
-
-        {/* Scroll indicator */}
-        <motion.div
-          className="absolute bottom-8 left-1/2 transform -translate-x-1/2"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.8, delay: 1.5 }}
-        >
-          <div className="w-6 h-10 border-2 border-primary rounded-full flex justify-center">
-            <div className="w-1 h-3 bg-primary rounded-full mt-2 animate-bounce"></div>
-          </div>
-        </motion.div>
       </div>
+      {/* Scroll indicator */}
+      <motion.div
+        className="absolute bottom-32 left-1/2 transform -translate-x-1/2 hidden md:block"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 0.8, delay: 1.5 }}
+      >
+        <div className="w-6 h-10 border-2 border-primary rounded-full flex justify-center">
+          <div className="w-1 h-3 bg-primary rounded-full mt-2 animate-bounce"></div>
+        </div>
+      </motion.div>
     </section>
   );
 };
