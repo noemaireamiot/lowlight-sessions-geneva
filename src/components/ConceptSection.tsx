@@ -1,81 +1,73 @@
-import { motion } from "framer-motion";
-import { Music, Heart, MapPin } from "lucide-react";
+import ScrollReveal from "./ScrollReveal";
+import type { Dictionary } from "@/i18n/dictionaries";
 
-const ConceptSection = () => {
-  const features = [
-    {
-      icon: Music,
-      title: "Intimate acoustics",
-      description: "Small-group concerts for a unique musical experience",
-    },
-    {
-      icon: Heart,
-      title: "Warm atmosphere",
-      description: "Dim lighting and cozy atmosphere on Geneva",
-    },
-    {
-      icon: MapPin,
-      title: "Secret venues",
-      description: "Private concerts with secret locations",
-    },
-  ];
+interface ConceptSectionProps {
+  dict: Dictionary["concept"];
+}
 
+export default function ConceptSection({ dict }: ConceptSectionProps) {
   return (
-    <section
-      id="concept"
-      className="py-20 md:px-6 bg-gradient-to-b from-background to-lowlight-charcoal"
-    >
-      <div className="container mx-auto max-w-4xl">
-        <motion.div
-          className="text-center mb-16"
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
-          viewport={{ once: true }}
-        >
-          <h2 className="text-4xl md:text-5xl font-serif font-light text-gradient mb-6">
-            The Concept
-          </h2>
-          <div className="space-y-6 text-lg text-muted-foreground max-w-3xl mx-auto">
-            <p>
-              The Lowlight Sessions reinvents the concert experience by creating
-              moments of musical intimacy in Geneva.
-            </p>
-            <p>
-              Each session is designed as an enchanted interlude where music
-              meets urban architecture, under the Geneva stars.
-            </p>
-            <p>
-              With a deliberately limited capacity and special attention to
-              ambiance, we create unique memories for music lovers seeking
-              authenticity.
-            </p>
-          </div>
-        </motion.div>
+    <section id="concept" className="py-32 px-6">
+      <div className="mx-auto max-w-5xl">
+        <ScrollReveal>
+          <div className="line-amber mb-16" />
+        </ScrollReveal>
 
-        <div className="grid md:grid-cols-3 gap-8">
-          {features.map((feature, index) => (
-            <motion.div
-              key={feature.title}
-              className="text-center"
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: index * 0.2 }}
-              viewport={{ once: true }}
-            >
-              <div className="w-16 h-16 mx-auto mb-4 bg-gradient-amber rounded-full flex items-center justify-center shadow-amber">
-                <feature.icon className="w-8 h-8 text-primary-foreground" />
-              </div>
-              <h3 className="text-xl font-serif text-primary mb-3">
-                {feature.title}
-              </h3>
-              <p className="text-muted-foreground">{feature.description}</p>
-            </motion.div>
-          ))}
+        <ScrollReveal>
+          <p className="text-sm tracking-[0.3em] uppercase text-amber font-light mb-4">
+            {dict.label}
+          </p>
+          <h2 className="font-serif text-4xl md:text-5xl lg:text-6xl font-semibold leading-tight mb-12">
+            {dict.title1}
+            <br />
+            <span className="text-amber-light">{dict.title2}</span>
+          </h2>
+        </ScrollReveal>
+
+        <div className="grid md:grid-cols-2 gap-16">
+          <ScrollReveal>
+            <p className="text-muted font-light leading-relaxed text-lg">
+              {dict.text1}
+            </p>
+          </ScrollReveal>
+          <ScrollReveal delay={2}>
+            <p className="text-muted font-light leading-relaxed text-lg">
+              {dict.text2}
+            </p>
+          </ScrollReveal>
+        </div>
+
+        {/* Feature blocks */}
+        <div className="grid md:grid-cols-3 gap-8 mt-24">
+          <ScrollReveal>
+            <div className="border border-white/5 p-8 hover:border-amber/20 transition-colors duration-300">
+              <div className="w-10 h-px bg-amber mb-6" />
+              <h3 className="font-serif text-xl font-medium mb-3">{dict.feature1Title}</h3>
+              <p className="text-muted font-light text-sm leading-relaxed">
+                {dict.feature1Text}
+              </p>
+            </div>
+          </ScrollReveal>
+          <ScrollReveal delay={1}>
+            <div className="border border-white/5 p-8 hover:border-amber/20 transition-colors duration-300">
+              <div className="w-10 h-px bg-amber mb-6" />
+              <h3 className="font-serif text-xl font-medium mb-3">{dict.feature2Title}</h3>
+              <p className="text-muted font-light text-sm leading-relaxed">
+                {dict.feature2Text}
+              </p>
+            </div>
+          </ScrollReveal>
+          <ScrollReveal delay={2}>
+            <div className="border border-white/5 p-8 hover:border-amber/20 transition-colors duration-300">
+              <div className="w-10 h-px bg-amber mb-6" />
+              <h3 className="font-serif text-xl font-medium mb-3">{dict.feature3Title}</h3>
+              <p className="text-muted font-light text-sm leading-relaxed">
+                {dict.feature3Text}
+              </p>
+            </div>
+          </ScrollReveal>
         </div>
       </div>
     </section>
   );
-};
-
-export default ConceptSection;
+}
