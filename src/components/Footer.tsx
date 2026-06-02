@@ -1,94 +1,46 @@
-import ScrollReveal from "./ScrollReveal";
-import type { Dictionary } from "@/i18n/dictionaries";
+"use client";
 
-interface FooterProps {
-  dict: Dictionary["footer"];
-  navDict: Dictionary["nav"];
-}
+import { useT } from "@/lib/i18n";
+import { links } from "@/lib/content";
 
-export default function Footer({ dict, navDict }: FooterProps) {
+export function Footer({ tone = "light" }: { tone?: "light" | "dark" }) {
+  const { t } = useT();
+  const isDark = tone === "dark";
+  const border = isDark ? "border-white/10" : "border-foreground/10";
+  const muted = isDark ? "text-white/50" : "text-foreground/50";
+  const link = isDark ? "text-white/80 hover:text-white" : "text-foreground/80 hover:text-foreground";
+
   return (
-    <footer id="contact" className="py-20 px-6 border-t border-white/5">
-      <div className="mx-auto max-w-6xl">
-        <ScrollReveal>
-          <div className="grid md:grid-cols-3 gap-12 mb-16">
-            {/* Brand */}
-            <div>
-              <h3 className="font-serif text-2xl font-semibold mb-4">
-                Lowlight<span className="text-amber">.</span>
-              </h3>
-              <p className="text-muted font-light text-sm leading-relaxed">
-                {dict.description}
-                <br />
-                {dict.location}
-              </p>
-            </div>
-
-            {/* Navigation */}
-            <div>
-              <h4 className="text-xs tracking-[0.3em] uppercase text-amber font-medium mb-4">
-                {dict.navTitle}
-              </h4>
-              <ul className="space-y-2">
-                <li>
-                  <a href="#concept" className="text-muted font-light text-sm hover:text-foreground transition-colors duration-200 cursor-pointer">
-                    {navDict.concept}
-                  </a>
-                </li>
-                <li>
-                  <a href="#sessions" className="text-muted font-light text-sm hover:text-foreground transition-colors duration-200 cursor-pointer">
-                    {navDict.sessions}
-                  </a>
-                </li>
-                <li>
-                  <a href="#community" className="text-muted font-light text-sm hover:text-foreground transition-colors duration-200 cursor-pointer">
-                    {navDict.community}
-                  </a>
-                </li>
-              </ul>
-            </div>
-
-            {/* Contact / Social */}
-            <div>
-              <h4 className="text-xs tracking-[0.3em] uppercase text-amber font-medium mb-4">
-                {dict.contactTitle}
-              </h4>
-              <div className="flex gap-4">
-                <a
-                  href="https://www.instagram.com/thelowlightsessions/"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-muted hover:text-amber transition-colors duration-200 cursor-pointer"
-                  aria-label="Instagram"
-                >
-                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
-                    <rect x="2" y="2" width="20" height="20" rx="5" />
-                    <circle cx="12" cy="12" r="5" />
-                    <circle cx="17.5" cy="6.5" r="1.5" fill="currentColor" stroke="none" />
-                  </svg>
-                </a>
-                <a
-                  href="mailto:hello@thelowlightsessions.com"
-                  className="text-muted hover:text-amber transition-colors duration-200 cursor-pointer"
-                  aria-label="Email"
-                >
-                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
-                    <rect x="2" y="4" width="20" height="16" rx="2" />
-                    <path d="M22 4L12 13 2 4" />
-                  </svg>
-                </a>
-              </div>
-              <p className="text-muted/40 font-light text-xs mt-6">
-                hello@thelowlightsessions.com
-              </p>
-            </div>
-          </div>
-        </ScrollReveal>
-
-        <div className="line-amber mb-8" />
-        <div className="flex flex-col md:flex-row items-center justify-between gap-4 text-muted/30 text-xs font-light">
-          <p>&copy; {new Date().getFullYear()} The Lowlight Sessions. {dict.rights}</p>
-          <p>{dict.location}</p>
+    <footer className={`border-t ${border} px-6 sm:px-12 py-12`}>
+      <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-8">
+        <div>
+          <p className="font-display text-2xl uppercase">The Low Light Sessions</p>
+          <p className={`mt-2 text-sm ${muted}`}>{t.footer.tagline}</p>
+        </div>
+        <div>
+          <p className={`text-xs uppercase tracking-widest mb-3 ${muted}`}>{t.footer.follow}</p>
+          <ul className="space-y-1 text-sm">
+            <li>
+              <a className={link} href={links.instagram} target="_blank" rel="noreferrer">
+                Instagram
+              </a>
+            </li>
+            <li>
+              <a className={link} href={links.youtube} target="_blank" rel="noreferrer">
+                YouTube
+              </a>
+            </li>
+            <li>
+              <a className={link} href={`mailto:${links.email}`}>
+                {links.email}
+              </a>
+            </li>
+          </ul>
+        </div>
+        <div className={`text-sm ${muted} md:text-right`}>
+          <p>© {new Date().getFullYear()} The Low Light Sessions.</p>
+          <p>{t.footer.rights}</p>
+          <p className="mt-2">Geneva — Switzerland</p>
         </div>
       </div>
     </footer>

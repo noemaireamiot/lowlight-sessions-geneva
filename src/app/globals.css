@@ -1,80 +1,60 @@
 @import "tailwindcss";
 
 :root {
-  --background: #0A0A0A;
-  --foreground: #FAF7F2;
-  --amber: #CA8A04;
-  --amber-light: #D4A574;
-  --amber-dark: #92400E;
-  --surface: #141414;
-  --surface-light: #1C1C1C;
-  --muted: #A8A29E;
+  color-scheme: light;
+  --background: #f5efe6;
+  --foreground: #1a1410;
+  --accent: #c9622f;
+  --muted: #8b7a68;
+  --paper: #ede3d3;
+}
+
+.theme-v2 {
+  --accent: #8a2e3f;
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --color-amber: var(--amber);
-  --color-amber-light: var(--amber-light);
-  --color-amber-dark: var(--amber-dark);
-  --color-surface: var(--surface);
-  --color-surface-light: var(--surface-light);
+  --color-accent: var(--accent);
   --color-muted: var(--muted);
-  --font-serif: var(--font-cormorant);
-  --font-sans: var(--font-montserrat);
-}
-
-html {
-  scroll-behavior: smooth;
+  --color-paper: var(--paper);
+  --font-display: var(--font-display);
+  --font-sans: var(--font-sans);
+  --font-serif: var(--font-serif);
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: var(--font-montserrat), sans-serif;
+  font-family: var(--font-sans), system-ui, sans-serif;
+  font-feature-settings: "ss01", "cv01";
 }
 
-/* Scroll reveal animations */
-.reveal {
-  opacity: 0;
-  transform: translateY(40px);
-  transition: opacity 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94),
-              transform 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+.font-display {
+  font-family: var(--font-display), Impact, sans-serif;
+  letter-spacing: 0.01em;
 }
 
-.reveal.visible {
-  opacity: 1;
-  transform: translateY(0);
+.font-serif {
+  font-family: var(--font-serif), Georgia, serif;
 }
 
-.reveal-delay-1 { transition-delay: 0.1s; }
-.reveal-delay-2 { transition-delay: 0.2s; }
-.reveal-delay-3 { transition-delay: 0.3s; }
-.reveal-delay-4 { transition-delay: 0.4s; }
-
-/* Stagger children */
-.reveal-stagger > .reveal:nth-child(1) { transition-delay: 0s; }
-.reveal-stagger > .reveal:nth-child(2) { transition-delay: 0.15s; }
-.reveal-stagger > .reveal:nth-child(3) { transition-delay: 0.3s; }
-
-/* Ambient glow effect */
-.glow-amber {
-  box-shadow: 0 0 60px rgba(202, 138, 4, 0.08),
-              0 0 120px rgba(202, 138, 4, 0.04);
+@keyframes glow {
+  0%, 100% { opacity: 0.6; transform: scale(1); }
+  50% { opacity: 1; transform: scale(1.05); }
 }
 
-/* Separator line */
-.line-amber {
-  height: 1px;
-  background: linear-gradient(90deg, transparent, var(--amber) 50%, transparent);
+.glow {
+  animation: glow 4s ease-in-out infinite;
 }
 
-/* Respect reduced motion */
-@media (prefers-reduced-motion: reduce) {
-  html { scroll-behavior: auto; }
-  .reveal {
-    opacity: 1;
-    transform: none;
-    transition: none;
-  }
+.paper-grain {
+  background-image:
+    radial-gradient(circle at 20% 30%, rgba(0,0,0,0.03) 0%, transparent 50%),
+    radial-gradient(circle at 80% 70%, rgba(0,0,0,0.02) 0%, transparent 50%);
+}
+
+.vignette {
+  box-shadow: inset 0 0 200px rgba(0, 0, 0, 0.5);
 }

@@ -1,30 +1,42 @@
 "use client";
 
-import { locales, LOCALE_COOKIE, type Locale } from "@/i18n/config";
+import { useT } from "@/lib/i18n";
 
-interface LanguageSwitcherProps {
-  current: Locale;
-}
-
-export default function LanguageSwitcher({ current }: LanguageSwitcherProps) {
-  function switchLocale(locale: Locale) {
-    document.cookie = `${LOCALE_COOKIE}=${locale};path=/;max-age=${60 * 60 * 24 * 365}`;
-    window.location.reload();
-  }
+export function LanguageSwitcher({
+  className = "",
+  tone = "light",
+}: {
+  className?: string;
+  tone?: "light" | "dark";
+}) {
+  const { locale, setLocale } = useT();
+  const base =
+    "px-2 py-1 text-xs uppercase tracking-widest transition-colors cursor-pointer";
+  const inactive =
+    tone === "dark"
+      ? "text-white/50 hover:text-white"
+      : "text-foreground/50 hover:text-foreground";
+  const active = tone === "dark" ? "text-white" : "text-foreground";
 
   return (
-    <div className="flex items-center gap-2 ml-4 border-l border-white/10 pl-4">
-      {locales.map((l) => (
-        <button
-          key={l}
-          onClick={() => switchLocale(l)}
-          className={`text-[10px] uppercase transition-colors duration-200 cursor-pointer ${
-            l === current ? "text-amber" : "text-muted/50 hover:text-muted"
-          }`}
-        >
-          {l}
-        </button>
-      ))}
+    <div className={`inline-flex items-center gap-1 ${className}`}>
+      <button
+        type="button"
+        onClick={() => setLocale("en")}
+        className={`${base} ${locale === "en" ? active : inactive}`}
+        aria-pressed={locale === "en"}
+      >
+        EN
+      </button>
+      <span className={tone === "dark" ? "text-white/30" : "text-foreground/30"}>/</span>
+      <button
+        type="button"
+        onClick={() => setLocale("fr")}
+        className={`${base} ${locale === "fr" ? active : inactive}`}
+        aria-pressed={locale === "fr"}
+      >
+        FR
+      </button>
     </div>
   );
 }

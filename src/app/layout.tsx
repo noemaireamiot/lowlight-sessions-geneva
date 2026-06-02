@@ -1,39 +1,42 @@
 import type { Metadata } from "next";
-import { Cormorant, Montserrat } from "next/font/google";
-import { getLocale } from "@/i18n/server";
+import { Erica_One, DM_Sans, Fraunces } from "next/font/google";
 import "./globals.css";
+import { I18nProvider } from "@/lib/i18n";
 
-const cormorant = Cormorant({
-  variable: "--font-cormorant",
+const ericaOne = Erica_One({
+  variable: "--font-display",
   subsets: ["latin"],
-  weight: ["400", "500", "600", "700"],
-  display: "swap",
+  weight: "400",
 });
 
-const montserrat = Montserrat({
-  variable: "--font-montserrat",
+const dmSans = DM_Sans({
+  variable: "--font-sans",
   subsets: ["latin"],
-  weight: ["300", "400", "500", "600"],
-  display: "swap",
+});
+
+const fraunces = Fraunces({
+  variable: "--font-serif",
+  subsets: ["latin"],
 });
 
 export const metadata: Metadata = {
-  title: "The Lowlight Sessions — Geneva",
+  title: "The Low Light Sessions — Geneva",
   description:
-    "Intimate music sessions in the heart of Geneva. Live concerts in private apartments — an experience like no other.",
+    "Live concerts in intimate settings in Geneva. The performers? A secret — until the lights go down.",
 };
 
-export default async function RootLayout({
+export default function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const locale = await getLocale();
-
   return (
-    <html lang={locale} className={`${cormorant.variable} ${montserrat.variable} antialiased`}>
-      <body className="min-h-screen bg-background text-foreground">
-        {children}
+    <html
+      lang="en"
+      className={`${ericaOne.variable} ${dmSans.variable} ${fraunces.variable} antialiased`}
+    >
+      <body>
+        <I18nProvider>{children}</I18nProvider>
       </body>
     </html>
   );

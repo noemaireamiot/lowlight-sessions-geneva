@@ -31,17 +31,10 @@ yarn-error.log*
 .pnpm-debug.log*
 
 # env files (can opt-in for committing if needed)
-.env
-.env*.local
+.env*
 
 # vercel
 .vercel
-
-# claude code
-.claude/settings.local.json
-
-# design system (generated)
-/design-system/
 
 # typescript
 *.tsbuildinfo
