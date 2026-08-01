@@ -1,0 +1,85 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+// MariaDB 10.11 on Infomaniak — the connection URL lives in prisma.config.ts.
+datasource db {
+  provider = "mysql"
+}
+
+/// A past or upcoming Low Light Session (one concert / one poster).
+model Session {
+  id        Int       @id @default(autoincrement())
+  number    Int       @unique
+  poster    String
+  heldOn    DateTime? @db.Date
+  venueHint String?
+  published Boolean   @default(true)
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+
+  artists SessionArtist[]
+
+  @@index([heldOn])
+}
+
+/// A performer. Artists can play more than one session, hence the join table.
+model Artist {
+  id        Int      @id @default(autoincrement())
+  name      String
+  handle    String   @unique
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  sessions SessionArtist[]
+}
+
+/// Join table — explicit so the lineup keeps its printed order.
+model SessionArtist {
+  sessionId Int
+  artistId  Int
+  position  Int @default(0)
+
+  session Session @relation(fields: [sessionId], references: [id], onDelete: Cascade)
+  artist  Artist  @relation(fields: [artistId], references: [id], onDelete: Cascade)
+
+  @@id([sessionId, artistId])
+  @@index([artistId])
+}
+
+/// Newsletter sign-ups from the hero / newsletter strip.
+model NewsletterSubscriber {
+  id           Int      @id @default(autoincrement())
+  email        String   @unique
+  locale       String   @default("fr")
+  unsubscribed Boolean  @default(false)
+  createdAt    DateTime @default(now())
+}
+
+enum ContactKind {
+  VOLUNTEER
+  VENUE
+  PERFORM
+}
+
+/// Submissions from the three contact tabs. `details` holds the
+/// tab-specific fields (address, band name, genre…) as JSON.
+model ContactSubmission {
+  id        Int         @id @default(autoincrement())
+  kind      ContactKind
+  firstName String
+  lastName  String
+  email     String
+  phone     String?
+  message   String?     @db.Text
+  details   Json?
+  handled   Boolean     @default(false)
+  createdAt DateTime    @default(now())
+
+  @@index([kind, createdAt])
+  @@index([email])
+}
