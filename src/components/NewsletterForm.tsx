@@ -42,6 +42,7 @@ export function NewsletterForm({ tone = "light" }: { tone?: "light" | "dark" }) 
           aria-hidden
           className="absolute h-0 w-0 overflow-hidden opacity-0"
         />
+        {/* min-w-0 lets the input shrink instead of pushing the button out. */}
         <input
           type="email"
           name="email"
@@ -49,12 +50,14 @@ export function NewsletterForm({ tone = "light" }: { tone?: "light" | "dark" }) 
           maxLength={200}
           autoComplete="email"
           placeholder={t.hero.emailPlaceholder}
-          className={`flex-1 border rounded-full px-5 py-3 text-sm focus:outline-none transition-colors ${inputBase}`}
+          className={`flex-1 min-w-0 border rounded-full px-5 py-3 text-sm focus:outline-none transition-colors ${inputBase}`}
         />
+        {/* shrink-0 + nowrap: without them the button is squeezed into a blob and
+            the label wraps onto three lines. */}
         <button
           type="submit"
           disabled={pending}
-          className={`rounded-full px-6 py-3 text-sm font-medium tracking-wide transition-colors cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed ${btnBase}`}
+          className={`shrink-0 whitespace-nowrap rounded-full px-6 py-3 text-sm font-medium tracking-wide transition-colors cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed ${btnBase}`}
         >
           {pending ? "…" : t.hero.join}
         </button>

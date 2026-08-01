@@ -47,7 +47,7 @@ export async function getNextSession(): Promise<UpcomingSession | null> {
   const row = await prisma.session.findFirst({
     where: { published: true, heldOn: { gte: startOfToday() } },
     orderBy: { heldOn: "asc" },
-    select: { number: true, title: true, heldOn: true },
+    select: { number: true, title: true, heldOn: true, ticketUrl: true },
   });
 
   if (!row?.heldOn) return null;
@@ -56,5 +56,6 @@ export async function getNextSession(): Promise<UpcomingSession | null> {
     number: row.number,
     title: row.title,
     heldOn: row.heldOn.toISOString().slice(0, 10),
+    ticketUrl: row.ticketUrl,
   };
 }

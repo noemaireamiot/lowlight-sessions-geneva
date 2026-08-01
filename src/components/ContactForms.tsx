@@ -32,7 +32,7 @@ export function ContactForms({ tone = "light" }: { tone?: "light" | "dark" }) {
     isDark ? "text-white/60" : "text-foreground/60"
   }`;
 
-  const btnCls = `mt-2 rounded-full px-6 py-3 text-sm font-medium tracking-wide transition-colors ${
+  const btnCls = `mt-2 shrink-0 whitespace-nowrap rounded-full px-6 py-3 text-sm font-medium tracking-wide transition-colors ${
     isDark ? "bg-white text-black hover:bg-white/90" : "bg-foreground text-background hover:bg-foreground/90"
   }`;
 

@@ -16,6 +16,11 @@ import {
   type UpcomingSession,
 } from "@/lib/content";
 
+/** Rejects the "#" placeholder and anything that is not an absolute http(s) URL. */
+function isRealLink(url: string | null | undefined): boolean {
+  return typeof url === "string" && /^https?:\/\/\S+$/i.test(url.trim());
+}
+
 /** Sessions come from the database, resolved by the server component in app/page.tsx. */
 export function HomeContent({
   sessions,
@@ -25,6 +30,13 @@ export function HomeContent({
   nextSession: UpcomingSession | null;
 }) {
   const { t, locale } = useT();
+
+  /**
+   * Booking link: the next session's own ticket URL wins, then the site-wide
+   * fallback. If neither is a real link the button is not rendered at all —
+   * a "Book now" that goes nowhere is worse than no button.
+   */
+  const bookingUrl = [nextSession?.ticketUrl, links.eventfrog].find(isRealLink) ?? null;
 
   return (
     <div className="min-h-screen bg-background text-foreground">
@@ -94,14 +106,16 @@ export function HomeContent({
                 </p>
               )}
             </div>
-            <a
-              href={links.eventfrog}
-              target="_blank"
-              rel="noreferrer"
-              className="px-7 py-3 rounded-full bg-accent text-white text-sm uppercase tracking-widest hover:bg-accent/90 transition-colors"
-            >
-              {t.hero.book}
-            </a>
+            {bookingUrl && (
+              <a
+                href={bookingUrl}
+                target="_blank"
+                rel="noreferrer"
+                className="shrink-0 whitespace-nowrap px-7 py-3 rounded-full bg-accent text-white text-sm uppercase tracking-widest hover:bg-accent/90 transition-colors"
+              >
+                {t.hero.book}
+              </a>
+            )}
           </div>
         </div>
 
@@ -215,7 +229,7 @@ export function HomeContent({
               href={links.youtube}
               target="_blank"
               rel="noreferrer"
-              className="px-5 py-2 rounded-full border border-foreground/20 hover:border-foreground transition-colors"
+              className="whitespace-nowrap px-5 py-2 rounded-full border border-foreground/20 hover:border-foreground transition-colors"
             >
               {t.sessions.watch} →
             </a>
@@ -223,7 +237,7 @@ export function HomeContent({
               href={links.instagram}
               target="_blank"
               rel="noreferrer"
-              className="px-5 py-2 rounded-full border border-foreground/20 hover:border-foreground transition-colors"
+              className="whitespace-nowrap px-5 py-2 rounded-full border border-foreground/20 hover:border-foreground transition-colors"
             >
               {t.sessions.viewMore} →
             </a>

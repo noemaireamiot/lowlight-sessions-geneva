@@ -15,6 +15,8 @@ export type UpcomingSession = {
   title: string | null;
   /** Plain `YYYY-MM-DD`, so nothing depends on Date serialisation. */
   heldOn: string;
+  /** Per-event ticketing link, set in the admin. */
+  ticketUrl: string | null;
 };
 
 /**
