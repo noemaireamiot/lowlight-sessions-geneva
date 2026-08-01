@@ -34,6 +34,7 @@ export type Dictionary = {
     eyebrow: string;
     title: string;
     subtitle: string;
+    empty: string;
     sessionLabel: string;
     viewMore: string;
     watch: string;
@@ -134,9 +135,10 @@ const en: Dictionary = {
   },
   sessions: {
     eyebrow: "Past concerts",
-    title: "Eight sessions, dozens of voices.",
+    title: "The sessions so far.",
     subtitle:
       "Each session is a single evening. The artists, the venue — both reveal themselves in turn.",
+    empty: "No past session to show yet.",
     sessionLabel: "Session",
     viewMore: "View on Instagram",
     watch: "Watch on YouTube",
@@ -293,9 +295,10 @@ const fr: Dictionary = {
   },
   sessions: {
     eyebrow: "Concerts passés",
-    title: "Huit sessions, des dizaines de voix.",
+    title: "Les sessions passées.",
     subtitle:
       "Chaque session est une soirée unique. Les artistes, le lieu — chacun se dévoile à son tour.",
+    empty: "Aucune session passée à afficher pour le moment.",
     sessionLabel: "Session",
     viewMore: "Voir sur Instagram",
     watch: "Voir sur YouTube",

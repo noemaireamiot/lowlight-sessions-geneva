@@ -8,11 +8,23 @@ import { LanguageSwitcher } from "@/components/LanguageSwitcher";
 import { NewsletterForm } from "@/components/NewsletterForm";
 import { ContactForms } from "@/components/ContactForms";
 import { Footer } from "@/components/Footer";
-import { links, instagramUrl, type Session } from "@/lib/content";
+import {
+  formatEventDate,
+  instagramUrl,
+  links,
+  type Session,
+  type UpcomingSession,
+} from "@/lib/content";
 
 /** Sessions come from the database, resolved by the server component in app/page.tsx. */
-export function HomeContent({ sessions }: { sessions: Session[] }) {
-  const { t } = useT();
+export function HomeContent({
+  sessions,
+  nextSession,
+}: {
+  sessions: Session[];
+  nextSession: UpcomingSession | null;
+}) {
+  const { t, locale } = useT();
 
   return (
     <div className="min-h-screen bg-background text-foreground">
@@ -50,7 +62,8 @@ export function HomeContent({ sessions }: { sessions: Session[] }) {
           <p className="text-xs uppercase tracking-[0.3em] text-white/70 mb-6">
             {t.hero.eyebrow}
           </p>
-          <h1 className="font-display uppercase text-white leading-[0.9] text-[clamp(3.5rem,11vw,10rem)]">
+          {/* Roughly 15% smaller than before, to leave the next session more room. */}
+          <h1 className="font-display uppercase text-white leading-[0.9] text-[clamp(3rem,9.35vw,8.5rem)]">
             {t.hero.titleLine1} <br />
             <span className="text-accent">{t.hero.titleLine2}</span>
           </h1>
@@ -64,7 +77,22 @@ export function HomeContent({ sessions }: { sessions: Session[] }) {
               <p className="text-xs uppercase tracking-[0.3em] text-white/50">
                 {t.hero.nextConcert}
               </p>
-              <p className="text-white text-lg font-medium mt-1">{t.hero.nextDate}</p>
+              {nextSession ? (
+                <>
+                  <p className="mt-1.5 font-display uppercase leading-tight text-white text-2xl sm:text-3xl">
+                    {formatEventDate(nextSession.heldOn, locale)}
+                  </p>
+                  {nextSession.title && (
+                    <p className="mt-1 text-sm sm:text-base text-white/70">
+                      {nextSession.title}
+                    </p>
+                  )}
+                </>
+              ) : (
+                <p className="mt-1.5 font-display uppercase leading-tight text-white/80 text-2xl sm:text-3xl">
+                  {t.hero.nextDate}
+                </p>
+              )}
             </div>
             <a
               href={links.eventfrog}
@@ -142,6 +170,10 @@ export function HomeContent({ sessions }: { sessions: Session[] }) {
           <p className="font-serif text-lg text-foreground/70 max-w-2xl mb-14">
             {t.sessions.subtitle}
           </p>
+
+          {sessions.length === 0 && (
+            <p className="font-serif text-lg text-foreground/50">{t.sessions.empty}</p>
+          )}
 
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6">
             {sessions.map((s) => (

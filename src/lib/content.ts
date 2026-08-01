@@ -9,6 +9,31 @@ export type Session = {
   artists: Artist[];
 };
 
+/** The next session to come, as handed to the hero. */
+export type UpcomingSession = {
+  number: number;
+  title: string | null;
+  /** Plain `YYYY-MM-DD`, so nothing depends on Date serialisation. */
+  heldOn: string;
+};
+
+/**
+ * Day-first long date, in the site's language. Pinned to UTC because `heldOn` is
+ * a DATE column stored at UTC midnight — formatting it in a local timezone could
+ * shift it to the previous day.
+ */
+export function formatEventDate(isoDate: string, locale: string): string {
+  const [year, month, day] = isoDate.split("-").map(Number);
+  if (!year || !month || !day) return isoDate;
+
+  return new Intl.DateTimeFormat(locale === "fr" ? "fr-CH" : "en-GB", {
+    day: "numeric",
+    month: "long",
+    year: "numeric",
+    timeZone: "UTC",
+  }).format(new Date(Date.UTC(year, month - 1, day)));
+}
+
 export const sessions: Session[] = [
   {
     number: 1,
@@ -90,10 +115,11 @@ export const photos = [
 ];
 
 export const links = {
-  // TODO: replace with real URLs
+  // TODO: no real ticketing URL yet — the hero "Book" button leads nowhere.
+  // A per-event link can also be set from the admin (Session.ticketUrl).
   eventfrog: "#",
-  instagram: "#",
-  youtube: "#",
+  instagram: "https://www.instagram.com/thelowlightsessions/",
+  youtube: "https://www.youtube.com/@TheLowLightSessions",
   email: "contact@thelowlightsessions.com",
 };
 
