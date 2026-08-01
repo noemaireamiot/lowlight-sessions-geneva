@@ -1,7 +1,14 @@
 export type Locale = "en" | "fr";
 
 export type Dictionary = {
-  nav: { about: string; sessions: string; posters: string; join: string; faq: string; contact: string };
+  nav: {
+    about: string;
+    sessions: string;
+    posters: string;
+    join: string;
+    faq: string;
+    contact: string;
+  };
   hero: {
     eyebrow: string;
     titleLine1: string;
@@ -51,7 +58,12 @@ export type Dictionary = {
       submit: string;
       sent: string;
     };
-    venue: { address: string; type: string; typeOptions: ReadonlyArray<string>; message: string };
+    venue: {
+      address: string;
+      type: string;
+      typeOptions: ReadonlyArray<string>;
+      message: string;
+    };
     perform: {
       bandName: string;
       zip: string;
@@ -95,8 +107,7 @@ const en: Dictionary = {
   about: {
     eyebrow: "About",
     title: "A circle of artists, listeners, dreamers.",
-    body:
-      "The Low Light Sessions is a non-profit organization that aims to promote live music, the arts and community by organizing private acoustic concerts and cultural events in intimate settings. We support the local music scene by providing a venue for local artists to perform and build their audience, while also introducing local audiences to artists from different countries and cultures. The Low Light Sessions aim to foster community and human connection around music and art, encouraging exchange, conviviality and networking among audience and artists.",
+    body: "The Low Light Sessions is a non-profit organization that aims to promote live music, the arts and community by organizing private acoustic concerts and cultural events in intimate settings. We support the local music scene by providing a venue for local artists to perform and build their audience, while also introducing local audiences to artists from different countries and cultures. The Low Light Sessions aim to foster community and human connection around music and art, encouraging exchange, conviviality and networking among audience and artists.",
   },
   principles: {
     eyebrow: "Core principles",
@@ -104,20 +115,17 @@ const en: Dictionary = {
       {
         n: "01",
         title: "Discovering music with an open mind",
-        body:
-          "At the Low Light Sessions, artists are not revealed before the concert. We invite the audience to come with an open mind, allowing the artists to bring us into their universe. We seek musicians who bring more than songs, with something rare and genuine to share, who can move hearts, surprise, and create lasting moments.",
+        body: "At the Low Light Sessions, artists are not revealed before the concert. We invite the audience to come with an open mind, allowing the artists to bring us into their universe. We seek musicians who bring more than songs, with something rare and genuine to share, who can move hearts, surprise, and create lasting moments.",
       },
       {
         n: "02",
         title: "Intimate settings",
-        body:
-          "We want each session to feel like an immersion, with a close proximity to the artists. To create that intimacy, concerts stay small, in living rooms, on rooftops, or in other unusual places around Geneva. The venue is announced to ticket-holders 48 hours before each concert, so the audience's journey begins with discovering the venue.",
+        body: "We want each session to feel like an immersion, with a close proximity to the artists. To create that intimacy, concerts stay small, in living rooms, on rooftops, or in other unusual places around Geneva. The venue is announced to ticket-holders 48 hours before each concert, so the audience's journey begins with discovering the venue.",
       },
       {
         n: "03",
         title: "Community",
-        body:
-          "We believe music shared in these spaces creates community. In an era where experiences are increasingly distant and digital, we aim to foster human connection around a shared musical experience. By keeping events small, we break boundaries between audience and artists, creating a space for them to exchange in a safe and convivial space during each session.",
+        body: "We believe music shared in these spaces creates community. In an era where experiences are increasingly distant and digital, we aim to foster human connection around a shared musical experience. By keeping events small, we break boundaries between audience and artists, creating a space for them to exchange in a safe and convivial space during each session.",
       },
     ],
   },
@@ -133,14 +141,12 @@ const en: Dictionary = {
   posters: {
     eyebrow: "Posters",
     title: "Hand-painted, by Claire.",
-    body:
-      "At the Low Light Sessions, we believe in slowing down: songs are played live, posters are drawn by hand, and everything carries the mark of time well spent. Before each session, Claire designs and paints a poster inspired by the music that will be performed — but the names of the performers stay a secret! They are added to the poster only after the session.",
+    body: "At the Low Light Sessions, we believe in slowing down: songs are played live, posters are drawn by hand, and everything carries the mark of time well spent. Before each session, Claire designs and paints a poster inspired by the music that will be performed — but the names of the performers stay a secret! They are added to the poster only after the session.",
   },
   join: {
     eyebrow: "Work with us",
     title: "We exist because of you, and with you.",
-    body:
-      "At its heart, the Low Light Sessions are a circle of people: artists, listeners, dreamers who gather to share something real. Each session is organized by volunteers, with care and devotion. If you feel called to contribute — by performing, helping us behind the scenes, sharing access to a unique place for a concert, or offering support so the light can keep shining — we welcome you with open arms.",
+    body: "At its heart, the Low Light Sessions are a circle of people: artists, listeners, dreamers who gather to share something real. Each session is organized by volunteers, with care and devotion. If you feel called to contribute — by performing, helping us behind the scenes, sharing access to a unique place for a concert, or offering support so the light can keep shining — we welcome you with open arms.",
     cta: "Get in touch",
   },
   faq: {
@@ -243,12 +249,14 @@ const fr: Dictionary = {
     titleLine1: "The Low Light",
     titleLine2: "Sessions",
     tagline: "Des concerts intimistes à Genève.",
-    secret: "Les artistes ? Un secret — jusqu'à ce que les lumières s'éteignent.",
+    secret:
+      "Les artistes ? Un secret — jusqu'à ce que les lumières s'éteignent.",
     nextConcert: "Prochaine session",
     nextDate: "À annoncer",
     book: "Réserver",
     signUp: "Soyez les premiers informés",
-    signUpHint: "Inscrivez-vous pour être informé·e de nos prochaines sessions.",
+    signUpHint:
+      "Inscrivez-vous pour être informé·e de nos prochaines sessions.",
     emailPlaceholder: "votre@email.com",
     join: "Rejoindre la liste",
     joined: "Nous reviendrons vers vous.",
@@ -256,8 +264,7 @@ const fr: Dictionary = {
   about: {
     eyebrow: "À propos",
     title: "Un cercle d'artistes, d'auditeurs, de rêveurs.",
-    body:
-      "The Low Light Sessions est une association à but non lucratif qui a pour objectif de promouvoir la musique live, les arts et la vie communautaire en organisant des concerts acoustiques privés et des événements culturels dans des cadres intimistes. Nous soutenons la scène musicale locale en offrant aux artistes locaux un lieu où se produire et se constituer un public, tout en faisant découvrir au public local des artistes issus de différents pays et cultures. The Low Light Sessions vise à favoriser les liens communautaires et humains autour de la musique et de l'art, en encourageant les échanges, la convivialité et le réseautage entre le public et les artistes.",
+    body: "The Low Light Sessions est une association à but non lucratif qui a pour objectif de promouvoir la musique live, les arts et la vie communautaire en organisant des concerts acoustiques privés et des événements culturels dans des cadres intimistes. Nous soutenons la scène musicale locale en offrant aux artistes locaux un lieu où se produire et se constituer un public, tout en faisant découvrir au public local des artistes issus de différents pays et cultures. The Low Light Sessions vise à favoriser les liens communautaires et humains autour de la musique et de l'art, en encourageant les échanges, la convivialité et le réseautage entre le public et les artistes.",
   },
   principles: {
     eyebrow: "Nos principes",
@@ -265,20 +272,17 @@ const fr: Dictionary = {
       {
         n: "01",
         title: "Découvrir la musique l'esprit ouvert",
-        body:
-          "Lors des Low Light Sessions, les artistes ne sont pas dévoilés avant le concert. Nous invitons le public à venir l'esprit ouvert, afin de laisser les artistes nous faire entrer dans leur univers. Nous recherchons des musiciens qui apportent plus que de simples chansons, qui ont quelque chose d'exceptionnel et d'authentique à partager, capables de toucher les cœurs, de surprendre et de créer des moments inoubliables.",
+        body: "Lors des Low Light Sessions, les artistes ne sont pas dévoilés avant le concert. Nous invitons le public à venir l'esprit ouvert, afin de laisser les artistes nous faire entrer dans leur univers. Nous recherchons des musiciens qui apportent plus que de simples chansons, qui ont quelque chose d'exceptionnel et d'authentique à partager, capables de toucher les cœurs, de surprendre et de créer des moments inoubliables.",
       },
       {
         n: "02",
         title: "Des cadres intimistes",
-        body:
-          "Nous souhaitons que chaque séance soit une véritable immersion, en toute proximité avec les artistes. Pour créer cette intimité, les concerts restent intimistes : ils se déroulent dans des salons, sur des toits ou dans d'autres lieux insolites de Genève. Le lieu est communiqué aux détenteurs de billets 48 heures avant chaque concert, afin que le parcours du public commence par la découverte du lieu.",
+        body: "Nous souhaitons que chaque séance soit une véritable immersion, en toute proximité avec les artistes. Pour créer cette intimité, les concerts restent intimistes : ils se déroulent dans des salons, sur des toits ou dans d'autres lieux insolites de Genève. Le lieu est communiqué aux détenteurs de billets 48 heures avant chaque concert, afin que le parcours du public commence par la découverte du lieu.",
       },
       {
         n: "03",
         title: "Une communauté",
-        body:
-          "Nous croyons que la musique partagée dans ces espaces crée une communauté. À une époque où les expériences sont de plus en plus distantes et digitales, nous voulons favoriser les liens humains autour d'une expérience musicale partagée. En gardant des événements à taille humaine, nous effaçons la frontière entre public et artistes, créant un espace d'échange sûr et convivial pendant chaque session.",
+        body: "Nous croyons que la musique partagée dans ces espaces crée une communauté. À une époque où les expériences sont de plus en plus distantes et digitales, nous voulons favoriser les liens humains autour d'une expérience musicale partagée. En gardant des événements à taille humaine, nous effaçons la frontière entre public et artistes, créant un espace d'échange sûr et convivial pendant chaque session.",
       },
     ],
   },
@@ -294,14 +298,12 @@ const fr: Dictionary = {
   posters: {
     eyebrow: "Affiches",
     title: "Peintes à la main, par Claire.",
-    body:
-      "Aux Low Light Sessions, nous croyons à l'importance de prendre le temps : les morceaux sont joués en direct, les affiches sont dessinées à la main, et tout porte la marque d'un moment bien passé. Avant chaque session, Claire conçoit et peint une affiche inspirée de la musique qui sera jouée — mais les noms des artistes restent secrets ! Ils ne sont ajoutés à l'affiche qu'après la session.",
+    body: "Aux Low Light Sessions, nous croyons à l'importance de prendre le temps : les morceaux sont joués en direct, les affiches sont dessinées à la main, et tout porte la marque d'un moment bien passé. Avant chaque session, Claire conçoit et peint une affiche inspirée de la musique qui sera jouée — mais les noms des artistes restent secrets ! Ils ne sont ajoutés à l'affiche qu'après la session.",
   },
   join: {
     eyebrow: "Travaillons ensemble",
     title: "Nous existons grâce à vous, et avec vous.",
-    body:
-      "Au fond, les Low Light Sessions, c'est un cercle de personnes : des artistes, des auditeurs, des rêveurs qui se réunissent pour partager quelque chose d'authentique. Chaque session est organisée par des bénévoles, avec soin et dévouement. Si vous vous sentez appelé·e à contribuer — en vous produisant sur scène, en nous aidant en coulisses, en nous permettant d'accéder à un lieu unique pour un concert, ou en nous apportant votre soutien pour que la lumière continue de briller — nous vous accueillons à bras ouverts.",
+    body: "Au fond, les Low Light Sessions, c'est un cercle de personnes : des artistes, des auditeurs, des rêveurs qui se réunissent pour partager quelque chose d'authentique. Chaque session est organisée par des bénévoles, avec soin et dévouement. Si vous vous sentez appelé·e à contribuer — en vous produisant sur scène, en nous aidant en coulisses, en nous permettant d'accéder à un lieu unique pour un concert, ou en nous apportant votre soutien pour que la lumière continue de briller — nous vous accueillons à bras ouverts.",
     cta: "Nous contacter",
   },
   faq: {

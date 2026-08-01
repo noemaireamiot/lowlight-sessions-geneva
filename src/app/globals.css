@@ -9,10 +9,6 @@
   --paper: #ede3d3;
 }
 
-.theme-v2 {
-  --accent: #8a2e3f;
-}
-
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
