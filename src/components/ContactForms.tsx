@@ -1,14 +1,19 @@
 "use client";
 
-import { useState } from "react";
+import { useActionState, useState } from "react";
 import { useT } from "@/lib/i18n";
+import { submitContact, type FormState } from "@/app/public-actions";
 
 type Tab = "volunteer" | "venue" | "perform";
 
 export function ContactForms({ tone = "light" }: { tone?: "light" | "dark" }) {
   const { t } = useT();
   const [tab, setTab] = useState<Tab>("volunteer");
-  const [sent, setSent] = useState(false);
+  const [state, action, pending] = useActionState<FormState, FormData>(
+    submitContact,
+    undefined,
+  );
+  const sent = state?.ok === true;
 
   const isDark = tone === "dark";
   const tabBase = "px-4 py-2 text-sm tracking-wide uppercase transition-colors cursor-pointer rounded-full";
@@ -31,12 +36,6 @@ export function ContactForms({ tone = "light" }: { tone?: "light" | "dark" }) {
     isDark ? "bg-white text-black hover:bg-white/90" : "bg-foreground text-background hover:bg-foreground/90"
   }`;
 
-  const onSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    setSent(true);
-    setTimeout(() => setSent(false), 4000);
-  };
-
   return (
     <div className="w-full">
       <div className="flex flex-wrap gap-2 mb-6">
@@ -44,10 +43,7 @@ export function ContactForms({ tone = "light" }: { tone?: "light" | "dark" }) {
           <button
             key={key}
             type="button"
-            onClick={() => {
-              setTab(key);
-              setSent(false);
-            }}
+            onClick={() => setTab(key)}
             className={`${tabBase} ${tab === key ? tabActive : tabInactive}`}
           >
             {t.contact.tabs[key]}
@@ -55,7 +51,18 @@ export function ContactForms({ tone = "light" }: { tone?: "light" | "dark" }) {
         ))}
       </div>
 
-      <form onSubmit={onSubmit} className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+      <form action={action} className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        {/* The active tab decides which extra fields the server keeps. */}
+        <input type="hidden" name="kind" value={tab} />
+        {/* Honeypot: hidden from humans, irresistible to bots. */}
+        <input
+          type="text"
+          name="_hp"
+          tabIndex={-1}
+          autoComplete="off"
+          aria-hidden
+          className="absolute h-0 w-0 overflow-hidden opacity-0"
+        />
         <Field label={t.contact.common.firstName} inputCls={inputCls} labelCls={labelCls} name="firstName" required />
         <Field label={t.contact.common.lastName} inputCls={inputCls} labelCls={labelCls} name="lastName" required />
         <Field label={t.contact.common.email} inputCls={inputCls} labelCls={labelCls} name="email" type="email" required />
@@ -97,13 +104,28 @@ export function ContactForms({ tone = "light" }: { tone?: "light" | "dark" }) {
           </>
         )}
 
-        <div className="sm:col-span-2 flex items-center gap-4">
-          <button type="submit" className={btnCls}>
-            {t.contact.common.submit}
+        <div className="sm:col-span-2 flex flex-wrap items-center gap-4">
+          <button
+            type="submit"
+            disabled={pending}
+            className={`${btnCls} cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed`}
+          >
+            {pending ? "…" : t.contact.common.submit}
           </button>
           {sent && (
-            <span className={`text-sm ${isDark ? "text-white/70" : "text-foreground/70"}`}>
+            <span
+              role="status"
+              className={`text-sm ${isDark ? "text-white/70" : "text-foreground/70"}`}
+            >
               {t.contact.common.sent}
+            </span>
+          )}
+          {state?.failed && (
+            <span
+              role="alert"
+              className={`text-sm ${isDark ? "text-white/70" : "text-foreground/70"}`}
+            >
+              {t.contact.common.error}
             </span>
           )}
         </div>

@@ -27,9 +27,12 @@ model User {
 model Session {
   id        Int       @id @default(autoincrement())
   number    Int       @unique
+  title     String?
   poster    String
   heldOn    DateTime? @db.Date
   venueHint String?
+  /// Per-event ticket link (Eventfrog…). Falls back to the site-wide link when empty.
+  ticketUrl String?   @db.VarChar(500)
   published Boolean   @default(true)
   createdAt DateTime  @default(now())
   updatedAt DateTime  @updatedAt

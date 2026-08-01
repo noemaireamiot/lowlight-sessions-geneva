@@ -1,11 +1,11 @@
 "use server";
 
-import { headers } from "next/headers";
 import { redirect } from "next/navigation";
 import prisma from "@/lib/prisma";
+import { clientIp } from "@/lib/client-ip";
 import { fakeVerify, verifyPassword } from "@/lib/password";
 import { createSession, destroySession } from "@/lib/session";
-import { checkThrottle, clearFailures, recordFailure } from "@/lib/login-throttle";
+import { loginLimiter } from "@/lib/rate-limit";
 
 export type LoginState = { error: string } | undefined;
 
@@ -13,15 +13,6 @@ const MAX_FIELD_LENGTH = 200;
 
 /** Single generic message: never reveal whether the username exists. */
 const INVALID_CREDENTIALS = "Incorrect username or password.";
-
-async function clientIp(): Promise<string> {
-  const headerList = await headers();
-  // Infomaniak fronts the Node app with a reverse proxy, so the client address
-  // is the leftmost entry of x-forwarded-for.
-  const forwarded = headerList.get("x-forwarded-for");
-  if (forwarded) return forwarded.split(",")[0]!.trim();
-  return headerList.get("x-real-ip") ?? "unknown";
-}
 
 export async function login(_state: LoginState, formData: FormData): Promise<LoginState> {
   const username = String(formData.get("username") ?? "").trim();
@@ -39,7 +30,7 @@ export async function login(_state: LoginState, formData: FormData): Promise<Log
   const keys = [`ip:${await clientIp()}`, `user:${username.toLowerCase()}`];
 
   for (const key of keys) {
-    const { blocked, retryAfterSeconds } = checkThrottle(key);
+    const { blocked, retryAfterSeconds } = loginLimiter.check(key);
     if (blocked) {
       const minutes = Math.ceil(retryAfterSeconds / 60);
       return {
@@ -68,11 +59,11 @@ export async function login(_state: LoginState, formData: FormData): Promise<Log
   }
 
   if (userId === null) {
-    for (const key of keys) recordFailure(key);
+    for (const key of keys) loginLimiter.record(key);
     return { error: INVALID_CREDENTIALS };
   }
 
-  for (const key of keys) clearFailures(key);
+  for (const key of keys) loginLimiter.clear(key);
   await createSession(userId);
 
   // Outside the try/catch above: redirect() signals by throwing.

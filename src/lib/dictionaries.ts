@@ -23,6 +23,7 @@ export type Dictionary = {
     emailPlaceholder: string;
     join: string;
     joined: string;
+    error: string;
   };
   about: { eyebrow: string; title: string; body: string };
   principles: {
@@ -57,6 +58,7 @@ export type Dictionary = {
       phone: string;
       submit: string;
       sent: string;
+      error: string;
     };
     venue: {
       address: string;
@@ -103,6 +105,7 @@ const en: Dictionary = {
     emailPlaceholder: "your@email.com",
     join: "Join the list",
     joined: "We'll be in touch.",
+    error: "Something went wrong. Please try again.",
   },
   about: {
     eyebrow: "About",
@@ -201,6 +204,7 @@ const en: Dictionary = {
       phone: "Phone",
       submit: "Send",
       sent: "Thanks — we'll get back to you soon.",
+      error: "Something went wrong. Please try again.",
     },
     venue: {
       address: "Address",
@@ -260,6 +264,7 @@ const fr: Dictionary = {
     emailPlaceholder: "votre@email.com",
     join: "Rejoindre la liste",
     joined: "Nous reviendrons vers vous.",
+    error: "Une erreur est survenue. Merci de réessayer.",
   },
   about: {
     eyebrow: "À propos",
@@ -358,6 +363,7 @@ const fr: Dictionary = {
       phone: "Téléphone",
       submit: "Envoyer",
       sent: "Merci — nous revenons vers vous très vite.",
+      error: "Une erreur est survenue. Merci de réessayer.",
     },
     venue: {
       address: "Adresse",
