@@ -5,7 +5,16 @@
       "Bash(git rm *)",
       "Bash(echo \"exit=$?\")",
       "Bash(npx tsc *)",
-      "Bash(docker run *)"
+      "Bash(docker run *)",
+      "Bash(docker exec *)",
+      "Bash(break)",
+      "Bash(curl -s -o /dev/null http://127.0.0.1:3111/)",
+      "Bash(curl -s -o /dev/null -w 'status=%{http_code} location=%{redirect_url}\\\\n' __TRACKED_VAR__/admin)",
+      "Bash(curl -s -w '\\\\nstatus=%{http_code}\\\\n' __TRACKED_VAR__/admin/login -o /tmp/login.html)",
+      "Read(//tmp/**)",
+      "Bash(grep -o '\\\\$ACTION[A-Za-z_0-9]*' /tmp/login.html)",
+      "Bash(git check-ignore *)",
+      "Bash(grep -rhoE '\"[A-Z][^\"]{3,80}[.…]\"|>[A-Z][a-z][^<>{]{2,60}<' src/app/admin)"
     ]
   }
 }

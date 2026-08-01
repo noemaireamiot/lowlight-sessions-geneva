@@ -11,6 +11,18 @@ datasource db {
   provider = "mysql"
 }
 
+/// Admin account for the /admin panel. `passwordHash` is a scrypt digest —
+/// never store or log the plaintext password.
+model User {
+  id           Int      @id @default(autoincrement())
+  username     String   @unique
+  /// `scrypt$N$r$p$salt$hash` — ~130 chars today, sized with room to spare in
+  /// case the scrypt parameters are strengthened later.
+  passwordHash String   @db.VarChar(255)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+}
+
 /// A past or upcoming Low Light Session (one concert / one poster).
 model Session {
   id        Int       @id @default(autoincrement())
