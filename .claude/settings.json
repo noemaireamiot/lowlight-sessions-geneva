@@ -14,7 +14,9 @@
       "Read(//tmp/**)",
       "Bash(grep -o '\\\\$ACTION[A-Za-z_0-9]*' /tmp/login.html)",
       "Bash(git check-ignore *)",
-      "Bash(grep -rhoE '\"[A-Z][^\"]{3,80}[.…]\"|>[A-Z][a-z][^<>{]{2,60}<' src/app/admin)"
+      "Bash(grep -rhoE '\"[A-Z][^\"]{3,80}[.…]\"|>[A-Z][a-z][^<>{]{2,60}<' src/app/admin)",
+      "Bash(curl -s -o /dev/null -w \"%{http_code}\\\\n\" http://127.0.0.1:3112/admin/login)",
+      "Bash(pkill -f \"next start -p 3112\")"
     ]
   }
 }
