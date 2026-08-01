@@ -1,0 +1,65 @@
+{
+  "node": {
+    "0007682566edd1177cee00dd455d19e7d193188c02": {
+      "workers": {
+        "app/admin/(dashboard)/users/page": {
+          "moduleId": 16533,
+          "async": true,
+          "exportedName": "logout",
+          "filename": "src/app/admin/actions.ts"
+        }
+      },
+      "exportedName": "logout",
+      "filename": "src/app/admin/actions.ts"
+    },
+    "608c9cb23c75db6ae79c32edee6afd79aa6bb1c355": {
+      "workers": {
+        "app/admin/(dashboard)/users/page": {
+          "moduleId": 16533,
+          "async": true,
+          "exportedName": "login",
+          "filename": "src/app/admin/actions.ts"
+        }
+      },
+      "exportedName": "login",
+      "filename": "src/app/admin/actions.ts"
+    },
+    "60a4ee844d50e0e4022fc9968eadeb60f55568652e": {
+      "workers": {
+        "app/admin/(dashboard)/users/page": {
+          "moduleId": 16533,
+          "async": true,
+          "exportedName": "deleteUser",
+          "filename": "src/app/admin/(dashboard)/users/actions.ts"
+        }
+      },
+      "exportedName": "deleteUser",
+      "filename": "src/app/admin/(dashboard)/users/actions.ts"
+    },
+    "60eebb9f02fa482e6de56a597b198fb399b8b06e4f": {
+      "workers": {
+        "app/admin/(dashboard)/users/page": {
+          "moduleId": 16533,
+          "async": true,
+          "exportedName": "createUser",
+          "filename": "src/app/admin/(dashboard)/users/actions.ts"
+        }
+      },
+      "exportedName": "createUser",
+      "filename": "src/app/admin/(dashboard)/users/actions.ts"
+    },
+    "70b0549102d6c242152e45641e34696cdfe97c54ab": {
+      "workers": {
+        "app/admin/(dashboard)/users/page": {
+          "moduleId": 16533,
+          "async": true,
+          "exportedName": "updateUser",
+          "filename": "src/app/admin/(dashboard)/users/actions.ts"
+        }
+      },
+      "exportedName": "updateUser",
+      "filename": "src/app/admin/(dashboard)/users/actions.ts"
+    }
+  },
+  "edge": {}
+}

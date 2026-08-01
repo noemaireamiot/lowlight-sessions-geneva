@@ -1,0 +1,29 @@
+{
+  "node": {
+    "60eaa7cadea6490e1467a19985e9ffd66878ed6b48": {
+      "workers": {
+        "app/page": {
+          "moduleId": 50173,
+          "async": true,
+          "exportedName": "subscribeNewsletter",
+          "filename": "src/app/public-actions.ts"
+        }
+      },
+      "exportedName": "subscribeNewsletter",
+      "filename": "src/app/public-actions.ts"
+    },
+    "6049cca12608ea3003bc7e81f754ac17369d6eaa6d": {
+      "workers": {
+        "app/page": {
+          "moduleId": 50173,
+          "async": true,
+          "exportedName": "submitContact",
+          "filename": "src/app/public-actions.ts"
+        }
+      },
+      "exportedName": "submitContact",
+      "filename": "src/app/public-actions.ts"
+    }
+  },
+  "edge": {}
+}

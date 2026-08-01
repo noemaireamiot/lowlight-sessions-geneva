@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useActionState, useState } from "react";
 import { buttonGhost, buttonPrimary } from "../ui";
+import { PosterField } from "./PosterField";
 import type { EventFormState } from "./actions";
 
 export type EventFormValues = {
@@ -58,14 +59,7 @@ export function EventForm({
           className="sm:col-span-2"
           hint="Optional"
         />
-        <Field
-          name="poster"
-          label="Poster path"
-          defaultValue={initial.poster}
-          required
-          className="sm:col-span-2"
-          hint="Path under /public, e.g. /images/posters/lls-09.jpg"
-        />
+        <PosterField name="poster" initialValue={initial.poster} />
         <Field
           name="venueHint"
           label="Venue hint"

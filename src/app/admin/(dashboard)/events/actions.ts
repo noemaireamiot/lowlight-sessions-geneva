@@ -4,6 +4,7 @@ import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import prisma from "@/lib/prisma";
 import { requireAdmin } from "@/lib/admin-auth";
+import { deleteMedia, isManagedMedia } from "@/lib/media";
 
 export type EventFormState = { error: string } | undefined;
 
@@ -120,6 +121,24 @@ async function syncArtists(sessionId: number, artists: ArtistInput[]): Promise<v
   }
 }
 
+/**
+ * Drops an uploaded file that nothing references any more.
+ *
+ * The count matters: filenames are content hashes, so two events that were given
+ * the same image share one file — deleting it blindly would break the other one.
+ */
+async function forgetPoster(previous: string, replacement: string | null): Promise<void> {
+  if (!isManagedMedia(previous) || previous === replacement) return;
+
+  try {
+    const stillReferenced = await prisma.session.count({ where: { poster: previous } });
+    if (stillReferenced === 0) await deleteMedia(previous);
+  } catch (error) {
+    // An orphaned file wastes a little disk; it must never fail the request.
+    console.error("Could not clean up the previous poster:", error);
+  }
+}
+
 function describeFailure(error: unknown, number: number): string {
   const code = (error as { code?: string })?.code;
   if (code === "P2002") return `Session #${number} already exists.`;
@@ -162,12 +181,21 @@ export async function updateEvent(
 
   const { artists, ...data } = parsed;
 
+  let previousPoster: string | null = null;
   try {
+    const existing = await prisma.session.findUnique({
+      where: { id },
+      select: { poster: true },
+    });
+    previousPoster = existing?.poster ?? null;
+
     await prisma.session.update({ where: { id }, data });
     await syncArtists(id, artists);
   } catch (error) {
     return { error: describeFailure(error, parsed.number) };
   }
+
+  if (previousPoster) await forgetPoster(previousPoster, data.poster);
 
   revalidatePath("/admin/events");
   revalidatePath("/");
@@ -183,7 +211,11 @@ export async function deleteEvent(formData: FormData): Promise<void> {
 
   try {
     // SessionArtist rows cascade on delete, per the schema.
-    await prisma.session.delete({ where: { id } });
+    const deleted = await prisma.session.delete({
+      where: { id },
+      select: { poster: true },
+    });
+    await forgetPoster(deleted.poster, null);
   } catch (error) {
     console.error("Event delete failed:", error);
   }

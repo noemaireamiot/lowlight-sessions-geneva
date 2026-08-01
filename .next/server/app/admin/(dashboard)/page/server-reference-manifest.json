@@ -1,0 +1,29 @@
+{
+  "node": {
+    "0007682566edd1177cee00dd455d19e7d193188c02": {
+      "workers": {
+        "app/admin/(dashboard)/page": {
+          "moduleId": 31390,
+          "async": true,
+          "exportedName": "logout",
+          "filename": "src/app/admin/actions.ts"
+        }
+      },
+      "exportedName": "logout",
+      "filename": "src/app/admin/actions.ts"
+    },
+    "608c9cb23c75db6ae79c32edee6afd79aa6bb1c355": {
+      "workers": {
+        "app/admin/(dashboard)/page": {
+          "moduleId": 31390,
+          "async": true,
+          "exportedName": "login",
+          "filename": "src/app/admin/actions.ts"
+        }
+      },
+      "exportedName": "login",
+      "filename": "src/app/admin/actions.ts"
+    }
+  },
+  "edge": {}
+}

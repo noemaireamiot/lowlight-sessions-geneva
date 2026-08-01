@@ -1,0 +1,53 @@
+{
+  "node": {
+    "0007682566edd1177cee00dd455d19e7d193188c02": {
+      "workers": {
+        "app/admin/(dashboard)/requests/page": {
+          "moduleId": 24553,
+          "async": true,
+          "exportedName": "logout",
+          "filename": "src/app/admin/actions.ts"
+        }
+      },
+      "exportedName": "logout",
+      "filename": "src/app/admin/actions.ts"
+    },
+    "608c9cb23c75db6ae79c32edee6afd79aa6bb1c355": {
+      "workers": {
+        "app/admin/(dashboard)/requests/page": {
+          "moduleId": 24553,
+          "async": true,
+          "exportedName": "login",
+          "filename": "src/app/admin/actions.ts"
+        }
+      },
+      "exportedName": "login",
+      "filename": "src/app/admin/actions.ts"
+    },
+    "4083daf205c1802ebab8f473c513c59e0c2555f858": {
+      "workers": {
+        "app/admin/(dashboard)/requests/page": {
+          "moduleId": 24553,
+          "async": true,
+          "exportedName": "deleteRequest",
+          "filename": "src/app/admin/(dashboard)/requests/actions.ts"
+        }
+      },
+      "exportedName": "deleteRequest",
+      "filename": "src/app/admin/(dashboard)/requests/actions.ts"
+    },
+    "40f3eb2a960d8f95f4180ae505799246bd30d6d8d7": {
+      "workers": {
+        "app/admin/(dashboard)/requests/page": {
+          "moduleId": 24553,
+          "async": true,
+          "exportedName": "setHandled",
+          "filename": "src/app/admin/(dashboard)/requests/actions.ts"
+        }
+      },
+      "exportedName": "setHandled",
+      "filename": "src/app/admin/(dashboard)/requests/actions.ts"
+    }
+  },
+  "edge": {}
+}

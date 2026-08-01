@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import Link from "next/link";
 import prisma from "@/lib/prisma";
 import { requireAdmin } from "@/lib/admin-auth";
@@ -54,6 +55,7 @@ export default async function EventsPage() {
           <thead>
             <tr>
               <Th>#</Th>
+              <Th>Poster</Th>
               <Th>Title</Th>
               <Th>Date</Th>
               <Th>Line-up</Th>
@@ -66,6 +68,17 @@ export default async function EventsPage() {
               <tr key={event.id} className="transition-colors hover:bg-paper/50">
                 <Td>
                   <span className="font-display text-lg">{event.number}</span>
+                </Td>
+                <Td>
+                  <span className="relative block aspect-[3/4] w-12 overflow-hidden rounded border border-foreground/10 bg-paper/50">
+                    <Image
+                      src={event.poster}
+                      alt=""
+                      fill
+                      sizes="48px"
+                      className="object-cover"
+                    />
+                  </span>
                 </Td>
                 <Td>{event.title ?? <span className="text-foreground/40">—</span>}</Td>
                 <Td muted>{formatDate(event.heldOn)}</Td>
