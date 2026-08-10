@@ -172,39 +172,42 @@ export function HomeContent({
         </div>
       </section>
 
-      {/* Past sessions — grid of posters */}
-      <section id="sessions" className="px-6 sm:px-12 py-24 sm:py-32">
-        <div className="max-w-7xl mx-auto">
-          <p className="text-xs uppercase tracking-[0.3em] text-accent mb-4">
+      {/* Past sessions — horizontal snap rail, ported from the v3 draft. */}
+      <section id="sessions" className="relative bg-foreground text-background py-24">
+        <div className="px-6 sm:px-12 mb-12">
+          <p className="text-xs uppercase tracking-[0.4em] text-accent mb-6">
             {t.sessions.eyebrow}
           </p>
-          <h2 className="font-display text-4xl sm:text-6xl uppercase leading-[1] mb-3">
+          <h2 className="font-display text-4xl sm:text-6xl uppercase leading-[1] max-w-3xl">
             {t.sessions.title}
           </h2>
-          <p className="font-serif text-lg text-foreground/70 max-w-2xl mb-14">
+          <p className="mt-4 font-serif text-lg text-background/70 max-w-2xl">
             {t.sessions.subtitle}
           </p>
+        </div>
 
-          {sessions.length === 0 && (
-            <p className="font-serif text-lg text-foreground/50">{t.sessions.empty}</p>
-          )}
-
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6">
-            {sessions.map((s) => (
-              <article key={s.number} className="group">
-                <div className="relative aspect-[3/4] overflow-hidden rounded-lg bg-paper">
-                  <Image
-                    src={s.poster}
-                    alt={`Poster session ${s.number}`}
-                    fill
-                    sizes="(min-width: 768px) 25vw, 50vw"
-                    className="object-cover transition-transform duration-500 group-hover:scale-105"
-                  />
-                </div>
-                <div className="mt-3">
-                  <p className="text-xs uppercase tracking-widest text-foreground/50">
-                    {t.sessions.sessionLabel} #{s.number}
-                  </p>
+        {sessions.length === 0 ? (
+          <p className="px-6 sm:px-12 font-serif text-lg text-background/50">
+            {t.sessions.empty}
+          </p>
+        ) : (
+          <div className="overflow-x-auto pb-6">
+            <div className="flex gap-6 px-6 sm:px-12 snap-x snap-mandatory">
+              {sessions.map((s) => (
+                <article
+                  key={s.number}
+                  className="snap-start shrink-0 w-[280px] sm:w-[360px]"
+                >
+                  <div className="relative aspect-[3/4] rounded-xl overflow-hidden bg-paper">
+                    <Image
+                      src={s.poster}
+                      alt={`Poster session ${s.number}`}
+                      fill
+                      sizes="360px"
+                      className="object-cover"
+                    />
+                  </div>
+                  <p className="mt-4 font-display text-3xl text-accent">#{s.number}</p>
                   <ul className="mt-1 space-y-0.5">
                     {s.artists.map((a) => (
                       <li key={a.handle} className="text-sm">
@@ -219,29 +222,29 @@ export function HomeContent({
                       </li>
                     ))}
                   </ul>
-                </div>
-              </article>
-            ))}
+                </article>
+              ))}
+            </div>
           </div>
+        )}
 
-          <div className="mt-12 flex flex-wrap gap-4 text-sm">
-            <a
-              href={links.youtube}
-              target="_blank"
-              rel="noreferrer"
-              className="whitespace-nowrap px-5 py-2 rounded-full border border-foreground/20 hover:border-foreground transition-colors"
-            >
-              {t.sessions.watch} →
-            </a>
-            <a
-              href={links.instagram}
-              target="_blank"
-              rel="noreferrer"
-              className="whitespace-nowrap px-5 py-2 rounded-full border border-foreground/20 hover:border-foreground transition-colors"
-            >
-              {t.sessions.viewMore} →
-            </a>
-          </div>
+        <div className="px-6 sm:px-12 mt-10 flex flex-wrap gap-4 text-sm">
+          <a
+            href={links.youtube}
+            target="_blank"
+            rel="noreferrer"
+            className="whitespace-nowrap px-5 py-2 rounded-full border border-background/20 hover:border-background transition-colors"
+          >
+            {t.sessions.watch} →
+          </a>
+          <a
+            href={links.instagram}
+            target="_blank"
+            rel="noreferrer"
+            className="whitespace-nowrap px-5 py-2 rounded-full border border-background/20 hover:border-background transition-colors"
+          >
+            {t.sessions.viewMore} →
+          </a>
         </div>
       </section>
 
