@@ -2,6 +2,7 @@
 
 import { clientIp } from "@/lib/client-ip";
 import { BOOLEAN_FIELDS } from "@/lib/contact-fields";
+import { subscribeToNewsletter } from "@/lib/infomaniak";
 import { publicFormLimiter } from "@/lib/rate-limit";
 import {
   CONTACT_KINDS,
@@ -10,7 +11,6 @@ import {
   detailFieldsFor,
   normaliseEmail,
   persistContact,
-  persistSubscription,
 } from "@/lib/public-submissions";
 
 /**
@@ -53,12 +53,16 @@ export async function subscribeNewsletter(
   if (looksLikeBot(formData)) return { ok: true };
   if (await overLimit("newsletter")) return { ok: true };
 
-  try {
-    await persistSubscription(email, text(formData, "locale"));
-  } catch (error) {
-    console.error("Newsletter subscription failed:", error);
-    return { ok: false, failed: true };
-  }
+  // Subscriptions live in Infomaniak's newsletter, not in our database.
+  const result = await subscribeToNewsletter({
+    email,
+    firstName: text(formData, "firstName"),
+    lastName: text(formData, "lastName"),
+  });
+
+  // The reason is already logged server-side; the visitor only needs to know it
+  // did not go through so they can try again.
+  if (!result.ok) return { ok: false, failed: true };
 
   return { ok: true };
 }

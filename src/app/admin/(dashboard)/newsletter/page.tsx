@@ -61,15 +61,13 @@ export default async function NewsletterPage() {
 
   const groups = groupByMonth(subscribers);
   const active = subscribers.filter((subscriber) => !subscriber.unsubscribed).length;
-  const currentMonth = new Date().toISOString().slice(0, 7);
-  const thisMonth = groups.find(([key]) => key === currentMonth)?.[1].length ?? 0;
 
   return (
     <Shell>
       <PageHeader
         eyebrow="Newsletter"
-        title="Subscribers"
-        description="Grouped by sign-up month, newest first."
+        title="Archive"
+        description="Sign-ups collected before the newsletter moved to Infomaniak. Nothing new is written here — manage the live list in your Infomaniak newsletter. Export the CSV below if you still need to import these addresses."
         action={
           subscribers.length > 0 ? (
             // A plain link, not fetch(): the browser handles the download itself.
@@ -88,10 +86,11 @@ export default async function NewsletterPage() {
         <EmptyState>No sign-ups yet.</EmptyState>
       ) : (
         <>
-          <div className="mb-10 grid grid-cols-2 gap-4 lg:grid-cols-3">
-            <StatCard label="Total" value={subscribers.length} />
+          {/* No "this month" card any more: the count would sit at zero forever
+              now that sign-ups go straight to Infomaniak. */}
+          <div className="mb-10 grid grid-cols-2 gap-4">
+            <StatCard label="Archived" value={subscribers.length} />
             <StatCard label="Active" value={active} hint="not unsubscribed" />
-            <StatCard label="This month" value={thisMonth} />
           </div>
 
           <div className="space-y-8">

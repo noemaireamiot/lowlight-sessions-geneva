@@ -37,16 +37,6 @@ export function detailFieldsFor(kind: ContactKind): readonly string[] {
   return CONTACT_TABS.find((tab) => tab.kind === kind)?.fields ?? [];
 }
 
-export async function persistSubscription(email: string, locale: string): Promise<void> {
-  // upsert, not create: re-subscribing must not error, and the caller must not be
-  // able to tell whether an address was already on the list.
-  await prisma.newsletterSubscriber.upsert({
-    where: { email },
-    create: { email, locale: locale === "fr" ? "fr" : "en" },
-    update: { unsubscribed: false, locale: locale === "fr" ? "fr" : "en" },
-  });
-}
-
 export type ContactInput = {
   kind: ContactKind;
   firstName: string;

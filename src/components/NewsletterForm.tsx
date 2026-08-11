@@ -5,7 +5,7 @@ import { useT } from "@/lib/i18n";
 import { subscribeNewsletter, type FormState } from "@/app/public-actions";
 
 export function NewsletterForm({ tone = "light" }: { tone?: "light" | "dark" }) {
-  const { t, locale } = useT();
+  const { t } = useT();
   const [state, action, pending] = useActionState<FormState, FormData>(
     subscribeNewsletter,
     undefined,
@@ -20,6 +20,7 @@ export function NewsletterForm({ tone = "light" }: { tone?: "light" | "dark" }) 
       ? "bg-white text-black hover:bg-white/90"
       : "bg-foreground text-background hover:bg-foreground/90";
   const noteColor = tone === "dark" ? "text-white/70" : "text-foreground/70";
+  const inputCls = `w-full min-w-0 border rounded-full px-5 py-3 text-sm focus:outline-none transition-colors ${inputBase}`;
 
   if (state?.ok) {
     return (
@@ -30,19 +31,41 @@ export function NewsletterForm({ tone = "light" }: { tone?: "light" | "dark" }) 
   }
 
   return (
-    <form action={action} className="flex flex-col gap-2 max-w-md">
-      <div className="flex flex-col sm:flex-row gap-2">
-        <input type="hidden" name="locale" value={locale} />
-        {/* Honeypot: hidden from humans, irresistible to bots. */}
+    <form action={action} className="w-full max-w-xl">
+      {/* Honeypot: hidden from humans, irresistible to bots. */}
+      <input
+        type="text"
+        name="_hp"
+        tabIndex={-1}
+        autoComplete="off"
+        aria-hidden
+        className="absolute h-0 w-0 overflow-hidden opacity-0"
+      />
+
+      {/* Names first, then the address and the button — three fields no longer
+          fit on one line, so they sit on two rows. Both names are optional. */}
+      <div className="grid grid-cols-1 gap-2 sm:grid-cols-2">
         <input
           type="text"
-          name="_hp"
-          tabIndex={-1}
-          autoComplete="off"
-          aria-hidden
-          className="absolute h-0 w-0 overflow-hidden opacity-0"
+          name="firstName"
+          maxLength={200}
+          autoComplete="given-name"
+          placeholder={t.contact.common.firstName}
+          aria-label={t.contact.common.firstName}
+          className={inputCls}
         />
-        {/* min-w-0 lets the input shrink instead of pushing the button out. */}
+        <input
+          type="text"
+          name="lastName"
+          maxLength={200}
+          autoComplete="family-name"
+          placeholder={t.contact.common.lastName}
+          aria-label={t.contact.common.lastName}
+          className={inputCls}
+        />
+      </div>
+
+      <div className="mt-2 flex flex-col gap-2 sm:flex-row">
         <input
           type="email"
           name="email"
@@ -50,10 +73,9 @@ export function NewsletterForm({ tone = "light" }: { tone?: "light" | "dark" }) 
           maxLength={200}
           autoComplete="email"
           placeholder={t.hero.emailPlaceholder}
-          className={`flex-1 min-w-0 border rounded-full px-5 py-3 text-sm focus:outline-none transition-colors ${inputBase}`}
+          aria-label={t.hero.emailPlaceholder}
+          className={`flex-1 ${inputCls}`}
         />
-        {/* shrink-0 + nowrap: without them the button is squeezed into a blob and
-            the label wraps onto three lines. */}
         <button
           type="submit"
           disabled={pending}
@@ -62,8 +84,9 @@ export function NewsletterForm({ tone = "light" }: { tone?: "light" | "dark" }) 
           {pending ? "…" : t.hero.join}
         </button>
       </div>
+
       {state?.failed && (
-        <p role="alert" className={`text-sm ${noteColor}`}>
+        <p role="alert" className={`mt-2 text-sm ${noteColor}`}>
           {t.hero.error}
         </p>
       )}

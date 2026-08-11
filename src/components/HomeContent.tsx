@@ -134,7 +134,9 @@ export function HomeContent({
 
       {/* Newsletter strip — the "sign up" channel below links here. */}
       <section id="newsletter" className="bg-foreground text-background px-6 sm:px-12 py-16">
-        <div className="max-w-5xl mx-auto flex flex-col md:flex-row md:items-center md:justify-between gap-6">
+        {/* Wider than before and with more breathing room: the form grew from one
+            field to three. */}
+        <div className="max-w-6xl mx-auto flex flex-col md:flex-row md:items-center md:justify-between gap-8 lg:gap-12">
           <div>
             <p className="text-xs uppercase tracking-[0.3em] text-background/50">
               {t.hero.signUp}
