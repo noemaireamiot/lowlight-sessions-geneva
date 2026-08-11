@@ -187,21 +187,6 @@ export function HomeContent({
         </div>
       </section>
 
-      {/* More about us — where the About "read more" link lands. Plain
-          background, so it does not sit between two textured sections. */}
-      <section id="about-more" className="px-6 sm:px-12 py-24 sm:py-32">
-        <div className="max-w-3xl mx-auto">
-          <h2 className="font-display text-4xl sm:text-6xl uppercase leading-[1] mb-10">
-            {t.moreAbout.title}
-          </h2>
-          <div className="space-y-5 font-serif text-lg leading-relaxed text-foreground/80">
-            {t.moreAbout.body.map((paragraph, i) => (
-              <p key={i}>{paragraph}</p>
-            ))}
-          </div>
-        </div>
-      </section>
-
       {/* Principles */}
       <section className="bg-paper px-6 sm:px-12 py-24">
         <div className="max-w-7xl mx-auto">
@@ -343,35 +328,44 @@ export function HomeContent({
       </section>
 
       {/* Posters section — Claire */}
-      <section id="posters" className="bg-foreground text-background px-6 sm:px-12 py-24">
+      {/* Mid-tone rather than dark: the sessions rail above is already dark, and
+          two dark bands in a row read as one long block. */}
+      <section id="posters" className="bg-paper px-6 sm:px-12 py-24">
         <div className="max-w-7xl mx-auto">
-          <div className="max-w-3xl">
-            <p className="text-xs uppercase tracking-[0.3em] text-accent mb-4">
-              {t.posters.eyebrow}
-            </p>
-            <h2 className="font-display text-4xl sm:text-6xl uppercase leading-[1] mb-8">
-              {t.posters.title}
-            </h2>
-            <p className="font-serif text-lg leading-relaxed text-background/80">
-              {t.posters.body}
-            </p>
-            <p className="mt-6 font-serif text-lg leading-relaxed text-background/80">
-              {t.posters.prints.before}
-              <a
-                href="#contact"
-                className="text-accent underline decoration-accent/40 underline-offset-4 transition-colors hover:decoration-accent"
-              >
-                {t.posters.prints.link}
-              </a>
-              {t.posters.prints.after}
-            </p>
+          {/* Heading and prose side by side, so the block spans the full measure
+              instead of hugging the left edge. */}
+          <div className="grid gap-8 md:grid-cols-2 md:items-end md:gap-16">
+            <div>
+              <p className="text-xs uppercase tracking-[0.3em] text-accent mb-4">
+                {t.posters.eyebrow}
+              </p>
+              <h2 className="font-display text-4xl sm:text-6xl uppercase leading-[1]">
+                {t.posters.title}
+              </h2>
+            </div>
+            <div className="space-y-5 font-serif text-lg leading-relaxed text-foreground/75">
+              <p>{t.posters.body}</p>
+              <p>
+                {t.posters.prints.before}
+                <a
+                  href="#contact"
+                  className="text-accent underline decoration-accent/40 underline-offset-4 transition-colors hover:decoration-accent"
+                >
+                  {t.posters.prints.link}
+                </a>
+                {t.posters.prints.after}
+              </p>
+            </div>
           </div>
 
-          {/* Three portrait shots of Claire's artwork. 2:3 keeps almost all of the
-              tallest one and only trims the two shot at 9:16. */}
-          <div className="mt-14 grid max-w-5xl grid-cols-1 gap-5 sm:grid-cols-3 sm:gap-6">
+          {/* Full width, three across: 2:3 keeps almost all of the tallest source
+              and only trims the two shot at 9:16. */}
+          <div className="mt-14 grid grid-cols-1 gap-5 sm:grid-cols-3 sm:gap-6">
             {POSTER_ARTWORK.map((src) => (
-              <div key={src} className="relative aspect-[2/3] overflow-hidden rounded-lg">
+              <div
+                key={src}
+                className="relative aspect-[2/3] overflow-hidden rounded-xl bg-background"
+              >
                 <Image
                   src={src}
                   alt={t.posters.imageAlt}
@@ -386,7 +380,7 @@ export function HomeContent({
       </section>
 
       {/* Contact */}
-      <section id="contact" className="px-6 sm:px-12 py-24">
+      <section id="contact" className="px-6 sm:px-12 py-24 paper-grain">
         <div className="max-w-4xl mx-auto">
           <p className="text-xs uppercase tracking-[0.3em] text-accent mb-4">
             {t.contact.eyebrow}
@@ -450,6 +444,20 @@ export function HomeContent({
           <div className="divide-y divide-foreground/10">
             {t.faq.items.map((item, i) => (
               <FaqItem key={i} q={item.q} a={item.a} />
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* More about us — where the About "read more" link lands. */}
+      <section id="about-more" className="px-6 sm:px-12 py-24 sm:py-32 paper-grain">
+        <div className="max-w-3xl mx-auto">
+          <h2 className="font-display text-4xl sm:text-6xl uppercase leading-[1] mb-10">
+            {t.moreAbout.title}
+          </h2>
+          <div className="space-y-5 font-serif text-lg leading-relaxed text-foreground/80">
+            {t.moreAbout.body.map((paragraph, i) => (
+              <p key={i}>{paragraph}</p>
             ))}
           </div>
         </div>
