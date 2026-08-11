@@ -117,7 +117,7 @@ export type Dictionary = {
     };
     volunteer: { intro: string; skill: string; message: string };
   };
-  footer: { tagline: string; follow: string; rights: string };
+  footer: { tagline: string; follow: string; rights: string; credit: string; newTab: string };
   language: { en: string; fr: string; switch: string };
 };
 
@@ -338,6 +338,8 @@ const en: Dictionary = {
     tagline: "Live music in intimate settings.",
     follow: "Follow",
     rights: "All rights reserved.",
+    credit: "Website made by Noé Maire-Amiot",
+    newTab: "opens in a new tab",
   },
   language: {
     en: "English",
@@ -566,6 +568,8 @@ const fr: Dictionary = {
     tagline: "De la musique live dans des cadres intimistes.",
     follow: "Suivez-nous",
     rights: "Tous droits réservés.",
+    credit: "Site réalisé par Noé Maire-Amiot",
+    newTab: "ouvre un nouvel onglet",
   },
   language: {
     en: "English",

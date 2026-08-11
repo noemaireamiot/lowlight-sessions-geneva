@@ -43,8 +43,41 @@ export function Footer({ tone = "light" }: { tone?: "light" | "dark" }) {
           <p>© {new Date().getFullYear()} The Low Light Sessions.</p>
           <p>{t.footer.rights}</p>
           <p className="mt-2">Geneva — Switzerland</p>
+          <p className="mt-2">
+            <a
+              href="https://noemaireamiot.com/"
+              target="_blank"
+              rel="noreferrer"
+              className={`inline-flex items-center gap-1.5 transition-colors ${link}`}
+            >
+              {t.footer.credit}
+              {/* Screen readers get no hint from target="_blank" on its own. */}
+              <span className="sr-only">({t.footer.newTab})</span>
+              <ExternalLinkIcon />
+            </a>
+          </p>
         </div>
       </div>
     </footer>
+  );
+}
+
+/** Inline SVG rather than an icon dependency for a single glyph. */
+function ExternalLinkIcon() {
+  return (
+    <svg
+      aria-hidden
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth={2}
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      className="size-[0.85em] shrink-0"
+    >
+      <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" />
+      <path d="M15 3h6v6" />
+      <path d="M10 14 21 3" />
+    </svg>
   );
 }
