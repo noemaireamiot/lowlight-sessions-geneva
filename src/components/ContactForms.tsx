@@ -3,6 +3,7 @@
 import { useActionState, useState } from "react";
 import { useT } from "@/lib/i18n";
 import { submitContact, type FormState } from "@/app/public-actions";
+import { MUSIC_STYLES } from "@/lib/music-styles";
 
 type Tab = "volunteer" | "venue" | "perform";
 
@@ -51,6 +52,17 @@ export function ContactForms({ tone = "light" }: { tone?: "light" | "dark" }) {
         ))}
       </div>
 
+      {/* Intro for the active tab. aria-live so a screen reader announces the
+          change when the tab is switched. */}
+      <p
+        aria-live="polite"
+        className={`mb-6 font-serif text-base leading-relaxed ${
+          isDark ? "text-white/70" : "text-foreground/70"
+        }`}
+      >
+        {t.contact[tab].intro}
+      </p>
+
       <form action={action} className="grid grid-cols-1 sm:grid-cols-2 gap-4">
         {/* The active tab decides which extra fields the server keeps. */}
         <input type="hidden" name="kind" value={tab} />
@@ -89,11 +101,57 @@ export function ContactForms({ tone = "light" }: { tone?: "light" | "dark" }) {
             <Field className="sm:col-span-2" label={t.contact.perform.bandName} inputCls={inputCls} labelCls={labelCls} name="bandName" />
             <Field label={t.contact.perform.zip} inputCls={inputCls} labelCls={labelCls} name="zip" />
             <Field label={t.contact.perform.city} inputCls={inputCls} labelCls={labelCls} name="city" />
-            <Field label={t.contact.perform.genre} inputCls={inputCls} labelCls={labelCls} name="genre" />
+            <div>
+              <label className={labelCls} htmlFor="genre">
+                {t.contact.perform.genre}
+              </label>
+              <select id="genre" className={inputCls} name="genre" defaultValue="">
+                <option value="">—</option>
+                {t.contact.perform.genreOptions.map((opt) => (
+                  <option key={opt} value={opt}>
+                    {opt}
+                  </option>
+                ))}
+              </select>
+            </div>
+
+            {/* A datalist, not a select: the list runs to 717 entries, and an
+                artist must still be able to type a style it does not cover. */}
+            <div>
+              <label className={labelCls} htmlFor="genreSub">
+                {t.contact.perform.genreSub}
+              </label>
+              <input
+                id="genreSub"
+                name="genreSub"
+                list="music-styles"
+                autoComplete="off"
+                placeholder={t.contact.perform.genreSubHint}
+                className={inputCls}
+              />
+              <datalist id="music-styles">
+                {MUSIC_STYLES.map((style) => (
+                  <option key={style} value={style} />
+                ))}
+              </datalist>
+            </div>
+
             <Field label={t.contact.perform.members} inputCls={inputCls} labelCls={labelCls} name="members" type="number" />
-            <Field label={t.contact.perform.manager} inputCls={inputCls} labelCls={labelCls} name="manager" />
+            <Field label={t.contact.perform.managerName} inputCls={inputCls} labelCls={labelCls} name="managerName" />
+            <Field label={t.contact.perform.manager} inputCls={inputCls} labelCls={labelCls} name="manager" type="email" />
             <Field label={t.contact.perform.website} inputCls={inputCls} labelCls={labelCls} name="website" />
             <Field className="sm:col-span-2" label={t.contact.perform.socials} inputCls={inputCls} labelCls={labelCls} name="socials" />
+
+            <label className="sm:col-span-2 flex cursor-pointer items-start gap-3 text-sm">
+              <input
+                type="checkbox"
+                name="recording"
+                className="mt-0.5 size-4 shrink-0 cursor-pointer accent-[var(--accent)]"
+              />
+              <span className={isDark ? "text-white/80" : "text-foreground/80"}>
+                {t.contact.perform.recording}
+              </span>
+            </label>
           </>
         )}
 

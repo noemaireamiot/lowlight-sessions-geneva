@@ -1,9 +1,6 @@
 import prisma from "@/lib/prisma";
 import type { Session, UpcomingSession } from "@/lib/content";
 
-/** How many past sessions the public grid shows. Older ones are not rendered. */
-export const PAST_SESSIONS_SHOWN = 8;
-
 /**
  * UTC midnight today. A session happening today still counts as upcoming, not
  * past — it only moves to the archive tomorrow.
@@ -14,16 +11,19 @@ function startOfToday(): Date {
 }
 
 /**
- * Published sessions that have already happened, most recent first.
+ * Every published session that has already happened, most recent first.
+ *
+ * Deliberately uncapped — the public rail scrolls horizontally, so the whole
+ * archive fits. Posters lazy-load, so a long history costs bandwidth only for
+ * the cards a visitor actually scrolls to.
  *
  * Sessions with no date are excluded: in SQL, `heldOn < :today` is never true for
  * NULL, so an undated session appears in neither list until a date is set.
  */
-export async function getPastSessions(limit = PAST_SESSIONS_SHOWN): Promise<Session[]> {
+export async function getPastSessions(): Promise<Session[]> {
   const rows = await prisma.session.findMany({
     where: { published: true, heldOn: { lt: startOfToday() } },
     orderBy: { heldOn: "desc" },
-    take: limit,
     include: {
       artists: {
         orderBy: { position: "asc" },

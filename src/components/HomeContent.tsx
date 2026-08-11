@@ -16,6 +16,13 @@ import {
   type UpcomingSession,
 } from "@/lib/content";
 
+/** Photographs of Claire's hand-painted artwork, shown in the posters section. */
+const POSTER_ARTWORK = [
+  "/images/claire_1.jpg",
+  "/images/claire_2.jpg",
+  "/images/claire_3.jpg",
+] as const;
+
 /** Rejects the "#" placeholder and anything that is not an absolute http(s) URL. */
 function isRealLink(url: string | null | undefined): boolean {
   return typeof url === "string" && /^https?:\/\/\S+$/i.test(url.trim());
@@ -48,6 +55,7 @@ export function HomeContent({
           </Link>
           <nav className="hidden md:flex items-center gap-7 text-xs uppercase tracking-widest">
             <a href="#about" className="hover:text-accent transition-colors">{t.nav.about}</a>
+            <a href="#artists" className="hover:text-accent transition-colors">{t.nav.artists}</a>
             <a href="#sessions" className="hover:text-accent transition-colors">{t.nav.sessions}</a>
             <a href="#posters" className="hover:text-accent transition-colors">{t.nav.posters}</a>
             <a href="#faq" className="hover:text-accent transition-colors">{t.nav.faq}</a>
@@ -124,8 +132,8 @@ export function HomeContent({
         </div>
       </section>
 
-      {/* Newsletter strip */}
-      <section className="bg-foreground text-background px-6 sm:px-12 py-16">
+      {/* Newsletter strip — the "sign up" channel below links here. */}
+      <section id="newsletter" className="bg-foreground text-background px-6 sm:px-12 py-16">
         <div className="max-w-5xl mx-auto flex flex-col md:flex-row md:items-center md:justify-between gap-6">
           <div>
             <p className="text-xs uppercase tracking-[0.3em] text-background/50">
@@ -145,12 +153,50 @@ export function HomeContent({
           <p className="text-xs uppercase tracking-[0.3em] text-accent mb-4">
             {t.about.eyebrow}
           </p>
-          <h2 className="font-display text-4xl sm:text-6xl uppercase leading-[1] mb-10">
+          {/* One step down from the other section headings: this one is a full
+              question, and the French wording runs to 98 characters. */}
+          <h2 className="font-display text-3xl sm:text-5xl uppercase leading-[1.05] mb-10">
             {t.about.title}
           </h2>
+
+          {/* 16:9 source, shown at the column width. Below the fold, so it lazy
+              loads — no `priority`. */}
+          <div className="relative mb-10 aspect-[16/9] overflow-hidden rounded-xl bg-paper">
+            <Image
+              src="/images/photos/LLS2_01.jpg"
+              alt={t.about.imageAlt}
+              fill
+              sizes="(min-width: 1024px) 896px, 100vw"
+              className="object-cover"
+            />
+          </div>
+
           <p className="font-serif text-lg sm:text-xl leading-relaxed text-foreground/80">
             {t.about.body}
           </p>
+
+          <a
+            href="#about-more"
+            className="mt-8 inline-flex items-center gap-2 text-xs uppercase tracking-[0.2em] text-accent transition-colors hover:text-foreground"
+          >
+            {t.about.readMore}
+            <span aria-hidden>↓</span>
+          </a>
+        </div>
+      </section>
+
+      {/* More about us — where the About "read more" link lands. Plain
+          background, so it does not sit between two textured sections. */}
+      <section id="about-more" className="px-6 sm:px-12 py-24 sm:py-32">
+        <div className="max-w-3xl mx-auto">
+          <h2 className="font-display text-4xl sm:text-6xl uppercase leading-[1] mb-10">
+            {t.moreAbout.title}
+          </h2>
+          <div className="space-y-5 font-serif text-lg leading-relaxed text-foreground/80">
+            {t.moreAbout.body.map((paragraph, i) => (
+              <p key={i}>{paragraph}</p>
+            ))}
+          </div>
         </div>
       </section>
 
@@ -160,7 +206,9 @@ export function HomeContent({
           <p className="text-xs uppercase tracking-[0.3em] text-accent mb-12">
             {t.principles.eyebrow}
           </p>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-10">
+          {/* Two columns, not three: there are four principles now, and a 3-wide
+              grid would leave the fourth stranded alone on a second row. */}
+          <div className="grid grid-cols-1 gap-10 md:grid-cols-2 md:gap-x-16 md:gap-y-14">
             {t.principles.items.map((item) => (
               <article key={item.n}>
                 <p className="font-display text-5xl text-accent">{item.n}</p>
@@ -169,6 +217,50 @@ export function HomeContent({
               </article>
             ))}
           </div>
+        </div>
+      </section>
+
+      {/* Artists — the target of the About "read more" link. */}
+      <section id="artists" className="px-6 sm:px-12 py-24 sm:py-32 paper-grain">
+        <div className="max-w-3xl mx-auto">
+          <p className="text-xs uppercase tracking-[0.3em] text-accent mb-4">
+            {t.artists.eyebrow}
+          </p>
+          <h2 className="font-display text-4xl sm:text-6xl uppercase leading-[1] mb-10">
+            {t.artists.title}
+          </h2>
+
+          <div className="space-y-5 font-serif text-lg leading-relaxed text-foreground/80">
+            {t.artists.intro.map((paragraph, i) => (
+              <p key={i}>{paragraph}</p>
+            ))}
+          </div>
+
+          {/* Native <details>: keyboard accessible and works without JavaScript. */}
+          <details className="group mt-14 border-t border-foreground/15">
+            <summary className="flex cursor-pointer list-none items-center justify-between gap-6 py-6 [&::-webkit-details-marker]:hidden">
+              <span className="font-display text-2xl uppercase tracking-tight sm:text-3xl">
+                {t.artists.applyTitle}
+              </span>
+              <span aria-hidden className="shrink-0 text-3xl leading-none text-accent">
+                <span className="group-open:hidden">+</span>
+                <span className="hidden group-open:inline">−</span>
+              </span>
+            </summary>
+
+            <div className="space-y-5 pb-4 font-serif text-lg leading-relaxed text-foreground/80">
+              {t.artists.apply.map((paragraph, i) => (
+                <p key={i}>{paragraph}</p>
+              ))}
+              <a
+                href="#contact"
+                className="mt-4 inline-flex shrink-0 items-center gap-2 whitespace-nowrap rounded-full bg-accent px-7 py-3 text-sm uppercase tracking-widest text-white transition-colors hover:bg-accent/90"
+              >
+                {t.artists.cta}
+                <span aria-hidden>→</span>
+              </a>
+            </div>
+          </details>
         </div>
       </section>
 
@@ -250,8 +342,8 @@ export function HomeContent({
 
       {/* Posters section — Claire */}
       <section id="posters" className="bg-foreground text-background px-6 sm:px-12 py-24">
-        <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
-          <div>
+        <div className="max-w-7xl mx-auto">
+          <div className="max-w-3xl">
             <p className="text-xs uppercase tracking-[0.3em] text-accent mb-4">
               {t.posters.eyebrow}
             </p>
@@ -261,18 +353,28 @@ export function HomeContent({
             <p className="font-serif text-lg leading-relaxed text-background/80">
               {t.posters.body}
             </p>
-          </div>
-          <div className="grid grid-cols-2 gap-4">
-            {sessions.slice(0, 4).map((s) => (
-              <div
-                key={s.number}
-                className="relative aspect-[3/4] overflow-hidden rounded-lg"
+            <p className="mt-6 font-serif text-lg leading-relaxed text-background/80">
+              {t.posters.prints.before}
+              <a
+                href="#contact"
+                className="text-accent underline decoration-accent/40 underline-offset-4 transition-colors hover:decoration-accent"
               >
+                {t.posters.prints.link}
+              </a>
+              {t.posters.prints.after}
+            </p>
+          </div>
+
+          {/* Three portrait shots of Claire's artwork. 2:3 keeps almost all of the
+              tallest one and only trims the two shot at 9:16. */}
+          <div className="mt-14 grid max-w-5xl grid-cols-1 gap-5 sm:grid-cols-3 sm:gap-6">
+            {POSTER_ARTWORK.map((src) => (
+              <div key={src} className="relative aspect-[2/3] overflow-hidden rounded-lg">
                 <Image
-                  src={s.poster}
-                  alt={`Poster ${s.number}`}
+                  src={src}
+                  alt={t.posters.imageAlt}
                   fill
-                  sizes="(min-width: 768px) 20vw, 50vw"
+                  sizes="(min-width: 640px) 33vw, 100vw"
                   className="object-cover"
                 />
               </div>
@@ -281,24 +383,56 @@ export function HomeContent({
         </div>
       </section>
 
-      {/* Join / Work with us */}
-      <section id="join" className="px-6 sm:px-12 py-24 sm:py-32 paper-grain">
-        <div className="max-w-3xl mx-auto text-center">
+      {/* Contact */}
+      <section id="contact" className="px-6 sm:px-12 py-24">
+        <div className="max-w-4xl mx-auto">
           <p className="text-xs uppercase tracking-[0.3em] text-accent mb-4">
-            {t.join.eyebrow}
+            {t.contact.eyebrow}
           </p>
-          <h2 className="font-display text-4xl sm:text-6xl uppercase leading-[1] mb-8">
-            {t.join.title}
+          <h2 className="font-display text-4xl sm:text-6xl uppercase leading-[1] mb-6">
+            {t.contact.title}
           </h2>
-          <p className="font-serif text-lg leading-relaxed text-foreground/80 mb-10">
-            {t.join.body}
-          </p>
-          <a
-            href="#contact"
-            className="inline-block px-7 py-3 rounded-full bg-accent text-white text-sm uppercase tracking-widest hover:bg-accent/90 transition-colors"
-          >
-            {t.join.cta}
-          </a>
+          <div className="space-y-4 font-serif text-lg leading-relaxed text-foreground/75">
+            <p>{t.contact.intro}</p>
+            <p>{t.contact.intro2}</p>
+          </div>
+
+          {/* The three ways to reach us, as cards. */}
+          <div className="mt-10 grid grid-cols-1 gap-4 sm:grid-cols-3">
+            <ChannelCard label={t.contact.channels.emailLabel} href={`mailto:${links.email}`}>
+              <span className="break-all">{links.email}</span>
+            </ChannelCard>
+
+            <ChannelCard label={t.contact.channels.signUpLabel} href="#newsletter">
+              {t.contact.channels.signUpText}
+            </ChannelCard>
+
+            {/* Not a link itself — it holds two. */}
+            <ChannelCard label={t.contact.channels.followLabel}>
+              <span className="flex flex-wrap items-baseline gap-x-3 gap-y-1">
+                <a
+                  href={links.instagram}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="underline decoration-foreground/20 underline-offset-4 transition-colors hover:text-accent"
+                >
+                  Instagram
+                </a>
+                <a
+                  href={links.youtube}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="underline decoration-foreground/20 underline-offset-4 transition-colors hover:text-accent"
+                >
+                  YouTube
+                </a>
+              </span>
+            </ChannelCard>
+          </div>
+
+          <div className="mt-14">
+            <ContactForms />
+          </div>
         </div>
       </section>
 
@@ -319,27 +453,46 @@ export function HomeContent({
         </div>
       </section>
 
-      {/* Contact */}
-      <section id="contact" className="px-6 sm:px-12 py-24">
-        <div className="max-w-4xl mx-auto">
-          <p className="text-xs uppercase tracking-[0.3em] text-accent mb-4">
-            {t.contact.eyebrow}
-          </p>
-          <h2 className="font-display text-4xl sm:text-6xl uppercase leading-[1] mb-6">
-            {t.contact.title}
-          </h2>
-          <p className="font-serif text-lg text-foreground/70 mb-2">{t.contact.intro}</p>
-          <p className="text-sm text-foreground/60 mb-10">
-            <a href={`mailto:${links.email}`} className="hover:text-accent transition-colors">
-              {links.email}
-            </a>
-          </p>
-          <ContactForms />
-        </div>
-      </section>
-
       <Footer />
     </div>
+  );
+}
+
+/**
+ * One way to get in touch. Renders as a link when `href` is given so the whole
+ * card is clickable; otherwise a plain box, because a card holding two links
+ * cannot itself be an anchor.
+ */
+function ChannelCard({
+  label,
+  href,
+  children,
+}: {
+  label: string;
+  href?: string;
+  children: React.ReactNode;
+}) {
+  const shell =
+    "group flex h-full flex-col gap-3 rounded-2xl border border-foreground/10 bg-paper/50 p-6 transition-colors";
+  const body = (
+    <>
+      <span className="text-[0.65rem] uppercase tracking-[0.25em] text-accent">{label}</span>
+      <span className="text-sm leading-relaxed text-foreground/80">{children}</span>
+    </>
+  );
+
+  if (!href) return <div className={shell}>{body}</div>;
+
+  return (
+    <a href={href} className={`${shell} hover:border-accent/40 hover:bg-paper`}>
+      {body}
+      <span
+        aria-hidden
+        className="mt-auto text-accent opacity-0 transition-opacity group-hover:opacity-100"
+      >
+        →
+      </span>
+    </a>
   );
 }
 

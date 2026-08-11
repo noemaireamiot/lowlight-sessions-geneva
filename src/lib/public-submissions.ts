@@ -54,7 +54,7 @@ export type ContactInput = {
   email: string;
   phone?: string;
   message?: string;
-  details?: Record<string, string>;
+  details?: Record<string, string | boolean>;
 };
 
 export async function persistContact(input: ContactInput): Promise<void> {

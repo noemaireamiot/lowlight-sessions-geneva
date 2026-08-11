@@ -3,9 +3,9 @@ export type Locale = "en" | "fr";
 export type Dictionary = {
   nav: {
     about: string;
+    artists: string;
     sessions: string;
     posters: string;
-    join: string;
     faq: string;
     contact: string;
   };
@@ -25,10 +25,28 @@ export type Dictionary = {
     joined: string;
     error: string;
   };
-  about: { eyebrow: string; title: string; body: string };
+  about: {
+    eyebrow: string;
+    title: string;
+    body: string;
+    imageAlt: string;
+    readMore: string;
+  };
+  moreAbout: {
+    title: string;
+    body: ReadonlyArray<string>;
+  };
   principles: {
     eyebrow: string;
     items: ReadonlyArray<{ n: string; title: string; body: string }>;
+  };
+  artists: {
+    eyebrow: string;
+    title: string;
+    intro: ReadonlyArray<string>;
+    applyTitle: string;
+    apply: ReadonlyArray<string>;
+    cta: string;
   };
   sessions: {
     eyebrow: string;
@@ -39,8 +57,14 @@ export type Dictionary = {
     viewMore: string;
     watch: string;
   };
-  posters: { eyebrow: string; title: string; body: string };
-  join: { eyebrow: string; title: string; body: string; cta: string };
+  posters: {
+    eyebrow: string;
+    title: string;
+    body: string;
+    imageAlt: string;
+    /** Split so "contact us" can be a link inside the sentence. */
+    prints: { before: string; link: string; after: string };
+  };
   faq: {
     eyebrow: string;
     title: string;
@@ -50,7 +74,14 @@ export type Dictionary = {
     eyebrow: string;
     title: string;
     intro: string;
+    intro2: string;
     email: string;
+    channels: {
+      emailLabel: string;
+      signUpLabel: string;
+      signUpText: string;
+      followLabel: string;
+    };
     tabs: { volunteer: string; venue: string; perform: string };
     common: {
       firstName: string;
@@ -62,22 +93,29 @@ export type Dictionary = {
       error: string;
     };
     venue: {
+      intro: string;
       address: string;
       type: string;
       typeOptions: ReadonlyArray<string>;
       message: string;
     };
     perform: {
+      intro: string;
       bandName: string;
       zip: string;
       city: string;
       genre: string;
+      genreOptions: ReadonlyArray<string>;
+      genreSub: string;
+      genreSubHint: string;
+      recording: string;
       members: string;
+      managerName: string;
       manager: string;
       website: string;
       socials: string;
     };
-    volunteer: { skill: string; message: string };
+    volunteer: { intro: string; skill: string; message: string };
   };
   footer: { tagline: string; follow: string; rights: string };
   language: { en: string; fr: string; switch: string };
@@ -86,9 +124,9 @@ export type Dictionary = {
 const en: Dictionary = {
   nav: {
     about: "About",
+    artists: "Artists",
     sessions: "Sessions",
     posters: "Posters",
-    join: "Join",
     faq: "FAQ",
     contact: "Contact",
   },
@@ -110,8 +148,18 @@ const en: Dictionary = {
   },
   about: {
     eyebrow: "About",
-    title: "A circle of artists, listeners, dreamers.",
-    body: "The Low Light Sessions is a non-profit organization that aims to promote live music, the arts and community by organizing private acoustic concerts and cultural events in intimate settings. We support the local music scene by providing a venue for local artists to perform and build their audience, while also introducing local audiences to artists from different countries and cultures. The Low Light Sessions aim to foster community and human connection around music and art, encouraging exchange, conviviality and networking among audience and artists.",
+    title: "What happens when you dim the lights and really listen?",
+    body: "The Low Light Sessions is a series of intimate acoustic concerts and cultural events that bring artists and audiences together in uncommon settings. We create spaces where music takes center stage, where local talent shares the spotlight with artists from around the world, and where every event feels less like a show and more like a shared experience. Part concert, part discovery, part community gathering, each session is an invitation to slow down, listen deeply, and connect through music, art, and conversation. You never know who you'll discover next. That's part of the magic.",
+    imageAlt: "The audience gathered at a Low Light Session in Geneva",
+    readMore: "Read more",
+  },
+  moreAbout: {
+    title: "More about us",
+    body: [
+      "The Low Light Sessions is an association that aims to promote live music, the arts and community by organizing private acoustic concerts and cultural events in intimate settings. We support the local music scene by providing a venue for local artists to perform and build their audience, while also introducing local audiences to artists from different countries and cultures. The Low Light Sessions aim to foster community and human connection around music and art, encouraging exchange, conviviality and networking among audience and artists.",
+      "The Low Light Sessions was born from a shared observation: the local music scene is incredibly vibrant, yet it remains difficult to create genuine spaces for connection between artists and audiences. Many concerts take place in settings where music becomes secondary — bars, transient venues, or events where the audience’s attention is divided. At the same time, emerging artists often struggle to find spaces where their work can be heard under the right conditions, with both attentive listening and high-quality sound.",
+      "The association was therefore created with a simple goal: to place listening, discovery, and human connection back at the heart of the musical experience. On one hand, it offers artists a respectful and intimate environment in which to perform; on the other, it gives curious audiences the opportunity to discover talents they would likely never encounter through traditional recommendation channels.",
+    ],
   },
   principles: {
     eyebrow: "Core principles",
@@ -119,7 +167,7 @@ const en: Dictionary = {
       {
         n: "01",
         title: "Discovering music with an open mind",
-        body: "At the Low Light Sessions, artists are not revealed before the concert. We invite the audience to come with an open mind, allowing the artists to bring us into their universe. We seek musicians who bring more than songs, with something rare and genuine to share, who can move hearts, surprise, and create lasting moments.",
+        body: "At the Low Light Sessions, artists are not revealed before the concert. We invite the audience to come with an open mind, allowing the artists to bring us into their universe. We seek musicians or other performing artists who bring more than songs, with something rare and genuine to share, who can move hearts, surprise, and create lasting moments.",
       },
       {
         n: "02",
@@ -128,16 +176,38 @@ const en: Dictionary = {
       },
       {
         n: "03",
+        title: "Valuing the Voices",
+        body: "The artists who perform for us have dedicated much of their lives to honing their craft to share their art with us. We believe they should not only be praised, but also paid for their craft. For this reason, the artists who perform are all remunerated thanks to our ticket sales. All proceeds go to the artists, and each session is organized by volunteers, with care.",
+      },
+      {
+        n: "04",
         title: "Community",
         body: "We believe music shared in these spaces creates community. In an era where experiences are increasingly distant and digital, we aim to foster human connection around a shared musical experience. By keeping events small, we break boundaries between audience and artists, creating a space for them to exchange in a safe and convivial space during each session.",
       },
     ],
   },
+  artists: {
+    eyebrow: "Artists",
+    title: "For the artists.",
+    intro: [
+      "The Low Light Sessions were created with artists in mind. Our priority is to provide the best possible conditions for musicians to share their work in an intimate setting, performing for an attentive audience that comes with one purpose: to discover new music and connect with unique artistic worlds.",
+      "We place great value on original projects with a strong artistic identity. Every event is carefully curated to bring together complementary musical universes and create a memorable experience for both the audience and the artists.",
+      "Beyond the Low Light Sessions themselves, we also develop concerts in private venues, public spaces, and in collaboration with festivals and cultural partners. We can also offer audio, video, and photo recording services to help artists create high-quality promotional content.",
+    ],
+    applyTitle: "How to apply?",
+    apply: [
+      "To make it easier to manage the large number of applications we receive, we have created an online application form. It allows us to gather all the essential information about your project—biography, music links, technical rider, photos, contact details, and more—in one place and build a database that we regularly use when curating future events.",
+      "Completing the form is the first and essential step to be considered for a Low Light Session. Once your application has been submitted, you are always welcome to contact us by email if you have a new project, a release, or any additional information you would like to share.",
+      "If you perform in more than one band or have several musical projects with different artistic identities, please submit a separate application for each project.",
+      "Finally, we believe it is important to state that every performance is paid. Supporting emerging artists means not only providing a meaningful stage, but also recognizing the value of their work through fair compensation.",
+      "We are not looking for a particular genre or style of music. What matters most to us is authenticity, a distinctive artistic identity, and the desire to create a meaningful and unforgettable shared experience.",
+    ],
+    cta: "Apply now",
+  },
   sessions: {
     eyebrow: "Past concerts",
-    title: "The sessions so far.",
-    subtitle:
-      "Each session is a single evening. The artists, the venue — both reveal themselves in turn.",
+    title: "Each session, a journey",
+    subtitle: "Discover the artists who have transported us before.",
     empty: "No past session to show yet.",
     sessionLabel: "Session",
     viewMore: "View on Instagram",
@@ -147,12 +217,13 @@ const en: Dictionary = {
     eyebrow: "Posters",
     title: "Hand-painted, by Claire.",
     body: "At the Low Light Sessions, we believe in slowing down: songs are played live, posters are drawn by hand, and everything carries the mark of time well spent. Before each session, Claire designs and paints a poster inspired by the music that will be performed — but the names of the performers stay a secret! They are added to the poster only after the session.",
-  },
-  join: {
-    eyebrow: "Work with us",
-    title: "We exist because of you, and with you.",
-    body: "At its heart, the Low Light Sessions are a circle of people: artists, listeners, dreamers who gather to share something real. Each session is organized by volunteers, with care and devotion. If you feel called to contribute — by performing, helping us behind the scenes, sharing access to a unique place for a concert, or offering support so the light can keep shining — we welcome you with open arms.",
-    cta: "Get in touch",
+    imageAlt: "A hand-painted Low Light Sessions poster by Claire",
+    prints: {
+      before:
+        "If you want a print of an existing poster or original artwork for your event poster, album, or other creative project, please ",
+      link: "contact us",
+      after: ".",
+    },
   },
   faq: {
     eyebrow: "FAQ",
@@ -190,14 +261,22 @@ const en: Dictionary = {
   },
   contact: {
     eyebrow: "Contact",
-    title: "Reach out.",
+    title: "Work with us.",
     intro:
-      "Interested in performing for us? Have access to a space you think would be great for a concert? Have a talent or time you'd like to volunteer? We'd love to hear from you.",
+      "At its heart, the Low Light Sessions are a circle of people: artists and audiophiles who gather to share something real. We exist because of you, and with you.",
+    intro2:
+      "If you want to participate, whether by performing, volunteering behind the scenes, sharing access to a unique place for a concert, or offering financial support so the light can keep shining, we'd love to hear from you. If you would like to hire us to organize a concert just for you and your friends, please email us to discuss:",
     email: "contact@thelowlightsessions.com",
+    channels: {
+      emailLabel: "Email",
+      signUpLabel: "Sign up",
+      signUpText: "Be the first to know about upcoming concerts.",
+      followLabel: "Follow us",
+    },
     tabs: {
       volunteer: "Volunteer",
-      venue: "Offer a venue",
-      perform: "Perform with us",
+      venue: "Suggest a venue",
+      perform: "Artist registration",
     },
     common: {
       firstName: "First name",
@@ -209,22 +288,48 @@ const en: Dictionary = {
       error: "Something went wrong. Please try again.",
     },
     venue: {
+      intro:
+        "Do you have access to a cozy, unique, or just cool venue for an intimate concert? We’d love to hear about it. Tell us a little more to express your interest.",
       address: "Address",
       type: "Type of space",
       typeOptions: ["Terrace", "Living room", "Garden", "Studio", "Other"],
       message: "Tell us about it",
     },
     perform: {
+      intro:
+        "Are you a musician or other performing artist looking to take the stage? Fill out the form below. If you play in multiple bands, please create a separate profile for each musical genre.",
       bandName: "Band / artist name",
       zip: "ZIP code",
       city: "City",
       genre: "Genre / type of music",
+      genreOptions: [
+        "Pop",
+        "Rock",
+        "Hip hop",
+        "Electro",
+        "Jazz",
+        "Classical",
+        "Reggae",
+        "Country",
+        "Blues",
+        "Metal",
+        "Folk",
+        "Rap",
+        "World music",
+        "Other",
+      ],
+      genreSub: "Sub-genre",
+      genreSubHint: "Start typing to search, or enter your own",
+      recording: "I am interested in an audio / video recording",
       members: "Number of members",
-      manager: "Manager contact",
+      managerName: "Manager name",
+      manager: "Manager email",
       website: "Website",
       socials: "Social links",
     },
     volunteer: {
+      intro:
+        "Do you have a talent or hobby related to event planning, or do you simply want to contribute your time and energy to organizing concerts? We welcome you with open arms! We’re always looking for extra help with setup, cleanup, preparing snacks, taking photos or videos…",
       skill: "Your skill or how you'd like to help",
       message: "A few words about you",
     },
@@ -244,9 +349,9 @@ const en: Dictionary = {
 const fr: Dictionary = {
   nav: {
     about: "À propos",
+    artists: "Artistes",
     sessions: "Sessions",
     posters: "Affiches",
-    join: "Nous rejoindre",
     faq: "FAQ",
     contact: "Contact",
   },
@@ -270,8 +375,19 @@ const fr: Dictionary = {
   },
   about: {
     eyebrow: "À propos",
-    title: "Un cercle d'artistes, d'auditeurs, de rêveurs.",
-    body: "The Low Light Sessions est une association à but non lucratif qui a pour objectif de promouvoir la musique live, les arts et la vie communautaire en organisant des concerts acoustiques privés et des événements culturels dans des cadres intimistes. Nous soutenons la scène musicale locale en offrant aux artistes locaux un lieu où se produire et se constituer un public, tout en faisant découvrir au public local des artistes issus de différents pays et cultures. The Low Light Sessions vise à favoriser les liens communautaires et humains autour de la musique et de l'art, en encourageant les échanges, la convivialité et le réseautage entre le public et les artistes.",
+    title:
+      "Que se passe-t-il lorsque l’on baisse les lumières et que l’on prend vraiment le temps d’écouter ?",
+    body: "The Low Light Sessions est une série de concerts acoustiques intimistes et d’événements culturels qui réunissent artistes et publics dans des lieux hors du commun. Nous créons des espaces où la musique occupe pleinement sa place, où les talents de la scène locale côtoient des artistes venus d’ailleurs, et où chaque rencontre ressemble moins à un spectacle qu’à une expérience partagée. À la fois concert, découverte et moment de convivialité, chaque session est une invitation à ralentir, à écouter autrement et à se connecter à travers la musique, l’art et les échanges. On ne sait jamais quelle sera sa prochaine découverte. C’est aussi ça, la magie.",
+    imageAlt: "Le public réuni lors d’une Low Light Session à Genève",
+    readMore: "En savoir plus",
+  },
+  moreAbout: {
+    title: "En savoir plus sur nous",
+    body: [
+      "The Low Light Sessions est une association à but non lucratif qui a pour objectif de promouvoir la musique live, les arts et la vie communautaire en organisant des concerts acoustiques privés et des événements culturels dans des cadres intimistes. Nous soutenons la scène musicale locale en offrant aux artistes locaux un lieu où se produire et se constituer un public, tout en faisant découvrir au public local des artistes issus de différents pays et cultures. The Low Light Sessions vise à favoriser les liens communautaires et humains autour de la musique et de l'art, en encourageant les échanges, la convivialité et le réseautage entre le public et les artistes.",
+      "The Low Light Sessions est né d’un constat partagé : la scène musicale locale est extrêmement riche, mais il reste souvent difficile de créer de véritables espaces de connexion entre les artistes et le public. De nombreux concerts ont lieu dans des contextes où la musique devient secondaire — bars, lieux de passage ou événements où l’attention du public est dispersée. À l’inverse, les artistes émergents peinent à trouver des espaces où leur travail peut être écouté dans de bonnes conditions, avec une réelle qualité d’attention et sonore.",
+      "L’association a donc été créée avec une volonté simple : remettre l’écoute, la découverte et la rencontre humaine au centre de l’expérience musicale. D’un côté, offrir aux artistes un cadre respectueux et intimiste ; de l’autre, permettre à un public curieux de découvrir des talents qu’il n’aurait probablement jamais rencontrés à travers les mécanismes habituels de recommandation.",
+    ],
   },
   principles: {
     eyebrow: "Nos principes",
@@ -279,7 +395,7 @@ const fr: Dictionary = {
       {
         n: "01",
         title: "Découvrir la musique l'esprit ouvert",
-        body: "Lors des Low Light Sessions, les artistes ne sont pas dévoilés avant le concert. Nous invitons le public à venir l'esprit ouvert, afin de laisser les artistes nous faire entrer dans leur univers. Nous recherchons des musiciens qui apportent plus que de simples chansons, qui ont quelque chose d'exceptionnel et d'authentique à partager, capables de toucher les cœurs, de surprendre et de créer des moments inoubliables.",
+        body: "Lors des Low Light Sessions, les artistes ne sont pas dévoilés avant le concert. Nous invitons le public à venir l'esprit ouvert, afin de laisser les artistes nous faire entrer dans leur univers. Nous recherchons des musiciens ou d’autres artistes interprètes qui apportent plus que de simples chansons, qui ont quelque chose d'exceptionnel et d'authentique à partager, capables de toucher les cœurs, de surprendre et de créer des moments inoubliables.",
       },
       {
         n: "02",
@@ -288,16 +404,38 @@ const fr: Dictionary = {
       },
       {
         n: "03",
+        title: "Valoriser les voix",
+        body: "Les artistes qui se produisent pour nous ont consacré une grande partie de leur vie à perfectionner leur art afin de le partager avec nous. Nous estimons qu’ils méritent non seulement d’être salués, mais aussi d’être rémunérés pour leur travail. C’est pour cela que les artistes qui se produisent sont tous rémunérés grâce à la vente de nos billets. L’intégralité des recettes leur revient, et chaque séance est organisée avec soin par des bénévoles.",
+      },
+      {
+        n: "04",
         title: "Une communauté",
         body: "Nous croyons que la musique partagée dans ces espaces crée une communauté. À une époque où les expériences sont de plus en plus distantes et digitales, nous voulons favoriser les liens humains autour d'une expérience musicale partagée. En gardant des événements à taille humaine, nous effaçons la frontière entre public et artistes, créant un espace d'échange sûr et convivial pendant chaque session.",
       },
     ],
   },
+  artists: {
+    eyebrow: "Artistes",
+    title: "Pour les artistes.",
+    intro: [
+      "Les Low Light Sessions sont avant tout un projet pensé pour les artistes. Notre priorité est de leur offrir les meilleures conditions possibles pour partager leur musique dans un cadre intimiste, devant un public attentif, curieux et venu avant tout pour découvrir de nouveaux univers musicaux.",
+      "Nous accordons une importance particulière aux projets artistiques singuliers, portés par des compositions originales et une identité propre. Chaque programmation est construite avec soin afin de créer une rencontre cohérente entre différents univers musicaux et de proposer une expérience unique au public comme aux artistes.",
+      "Au-delà des Low Light Sessions, nous développons également des concerts dans d'autres lieux privés, des espaces publics ainsi que des collaborations avec des festivals et partenaires culturels. Nous proposons également des services de captation audio, vidéo et photo afin d'accompagner les artistes dans la création de contenus de promotion de qualité.",
+    ],
+    applyTitle: "Comment postuler ?",
+    apply: [
+      "Afin de faciliter le traitement des nombreuses candidatures que nous recevons, nous avons mis en place un formulaire d'inscription. Il nous permet de centraliser toutes les informations essentielles (biographie, liens d'écoute, fiche technique, photos, contacts, etc.) et de constituer une base de données que nous consultons pour nos futures programmations.",
+      "Le formulaire constitue la première étape indispensable pour être pris en compte dans notre processus de sélection. Une fois celui-ci complété, vous êtes bien entendu les bienvenus pour nous contacter par e-mail afin de nous faire part d'un nouveau projet, d'une actualité ou d'une proposition particulière.",
+      "Si vous jouez dans plusieurs groupes ou développez plusieurs projets musicaux aux identités différentes, nous vous remercions de remplir un formulaire distinct pour chacun d'entre eux.",
+      "Enfin, il nous semble essentiel de rappeler que toutes les prestations artistiques sont rémunérées. Soutenir les artistes émergents ne consiste pas seulement à leur offrir une scène de qualité, mais également à reconnaître la valeur de leur travail.",
+      "Nous ne recherchons pas un style musical en particulier. Ce qui nous intéresse avant tout, c'est une proposition artistique sincère, une identité forte et l'envie de créer un moment de partage inoubliable.",
+    ],
+    cta: "Postuler",
+  },
   sessions: {
     eyebrow: "Concerts passés",
-    title: "Les sessions passées.",
-    subtitle:
-      "Chaque session est une soirée unique. Les artistes, le lieu — chacun se dévoile à son tour.",
+    title: "Chaque session, une évasion.",
+    subtitle: "Découvrez les artistes qui nous ont déjà fait voyager.",
     empty: "Aucune session passée à afficher pour le moment.",
     sessionLabel: "Session",
     viewMore: "Voir sur Instagram",
@@ -307,12 +445,13 @@ const fr: Dictionary = {
     eyebrow: "Affiches",
     title: "Peintes à la main, par Claire.",
     body: "Aux Low Light Sessions, nous croyons à l'importance de prendre le temps : les morceaux sont joués en direct, les affiches sont dessinées à la main, et tout porte la marque d'un moment bien passé. Avant chaque session, Claire conçoit et peint une affiche inspirée de la musique qui sera jouée — mais les noms des artistes restent secrets ! Ils ne sont ajoutés à l'affiche qu'après la session.",
-  },
-  join: {
-    eyebrow: "Travaillons ensemble",
-    title: "Nous existons grâce à vous, et avec vous.",
-    body: "Au fond, les Low Light Sessions, c'est un cercle de personnes : des artistes, des auditeurs, des rêveurs qui se réunissent pour partager quelque chose d'authentique. Chaque session est organisée par des bénévoles, avec soin et dévouement. Si vous vous sentez appelé·e à contribuer — en vous produisant sur scène, en nous aidant en coulisses, en nous permettant d'accéder à un lieu unique pour un concert, ou en nous apportant votre soutien pour que la lumière continue de briller — nous vous accueillons à bras ouverts.",
-    cta: "Nous contacter",
+    imageAlt: "Une affiche des Low Light Sessions peinte à la main par Claire",
+    prints: {
+      before:
+        "Si vous souhaitez une impression d’une affiche existante ou une œuvre originale pour votre affiche d’événement, votre pochette d’album ou tout autre projet créatif, n’hésitez pas à ",
+      link: "nous contacter",
+      after: ".",
+    },
   },
   faq: {
     eyebrow: "FAQ",
@@ -350,14 +489,22 @@ const fr: Dictionary = {
   },
   contact: {
     eyebrow: "Contact",
-    title: "Écrivez-nous.",
+    title: "Travaillons ensemble.",
     intro:
-      "Envie de jouer pour nous ? Vous avez accès à un lieu qui pourrait accueillir un concert ? Un talent ou du temps à offrir en bénévolat ? Nous serions ravis de vous lire.",
+      "Au fond, les Low Light Sessions, c’est un cercle de personnes : des artistes, des auditeurs, des rêveurs qui se réunissent pour partager quelque chose d’authentique. Nous existons grâce à vous, et avec vous.",
+    intro2:
+      "Si vous vous sentez appelé à contribuer, que ce soit en vous produisant sur scène, en nous aidant en coulisses, en nous permettant d’accéder à un lieu unique pour un concert, ou en nous apportant votre soutien financier pour que la lumière continue de briller, nous vous accueillons à bras ouverts. Si vous souhaitez faire appel à nos services pour organiser un concert rien que pour vous et vos amis, n’hésitez pas à nous envoyer un e-mail pour en discuter.",
     email: "contact@thelowlightsessions.com",
+    channels: {
+      emailLabel: "E-mail",
+      signUpLabel: "Inscrivez-vous",
+      signUpText: "Soyez les premiers informés des prochains concerts.",
+      followLabel: "Suivez-nous",
+    },
     tabs: {
       volunteer: "Bénévole",
       venue: "Proposer un lieu",
-      perform: "Jouer chez nous",
+      perform: "Inscription artiste",
     },
     common: {
       firstName: "Prénom",
@@ -369,22 +516,48 @@ const fr: Dictionary = {
       error: "Une erreur est survenue. Merci de réessayer.",
     },
     venue: {
+      intro:
+        "Vous avez accès à un lieu chaleureux, atypique ou juste sympa pour un concert intimiste ? Ravis de l’entendre. Dites-nous en un peu plus pour exprimer votre intérêt.",
       address: "Adresse",
       type: "Type d'espace",
       typeOptions: ["Terrasse", "Salon", "Jardin", "Studio", "Autre"],
       message: "Parlez-nous de votre lieu",
     },
     perform: {
+      intro:
+        "Vous êtes musicien·ne ou autre artiste interprète et vous voulez prendre la scène ? Remplissez le formulaire ci-dessous. Si vous jouez dans plusieurs groupes, merci de créer une identité pour chaque type de musique.",
       bandName: "Nom du groupe / artiste",
       zip: "NPA",
       city: "Ville",
       genre: "Style / type de musique",
+      genreOptions: [
+        "Pop",
+        "Rock",
+        "Hip hop",
+        "Electro",
+        "Jazz",
+        "Classique",
+        "Reggae",
+        "Country",
+        "Blues",
+        "Métal",
+        "Folk",
+        "Rap",
+        "Musique du Monde",
+        "Autre",
+      ],
+      genreSub: "Sous-catégorie",
+      genreSubHint: "Commencez à taper pour chercher, ou saisissez le vôtre",
+      recording: "Je suis intéressé·e par une captation audio / vidéo",
       members: "Nombre de membres",
-      manager: "Contact manager",
+      managerName: "Nom du manager",
+      manager: "E-mail du manager",
       website: "Site internet",
       socials: "Réseaux sociaux",
     },
     volunteer: {
+      intro:
+        "Vous avez un talent ou hobby lié à l’événementiel ou voulez simplement contribuer votre temps et énergie à l’organisation des concerts ? On vous accueille les bras ouverts ! On cherche toujours une aide supplémentaire pour l’installation, le rangement, la préparation des en-cas, la prise de photos ou de vidéos…",
       skill: "Vos compétences ou la façon dont vous voulez aider",
       message: "Quelques mots sur vous",
     },

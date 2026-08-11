@@ -1,9 +1,9 @@
 import type { Metadata } from "next";
-import { Erica_One, DM_Sans, Fraunces } from "next/font/google";
+import { Titan_One, DM_Sans, Fraunces } from "next/font/google";
 import "./globals.css";
 import { I18nProvider } from "@/lib/i18n";
 
-const ericaOne = Erica_One({
+const titanOne = Titan_One({
   variable: "--font-display",
   subsets: ["latin"],
   weight: "400",
@@ -33,7 +33,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${ericaOne.variable} ${dmSans.variable} ${fraunces.variable} antialiased`}
+      className={`${titanOne.variable} ${dmSans.variable} ${fraunces.variable} antialiased`}
     >
       <body>
         <I18nProvider>{children}</I18nProvider>

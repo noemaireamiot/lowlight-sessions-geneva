@@ -11,7 +11,19 @@ export const CONTACT_TABS = [
     slug: "perform",
     kind: ContactKind.PERFORM,
     label: "Artists",
-    fields: ["bandName", "genre", "members", "city", "zip", "manager", "website", "socials"],
+    fields: [
+      "bandName",
+      "genre",
+      "genreSub",
+      "recording",
+      "members",
+      "city",
+      "zip",
+      "managerName",
+      "manager",
+      "website",
+      "socials",
+    ],
   },
   { slug: "venue", kind: ContactKind.VENUE, label: "Venues", fields: ["address", "type"] },
   {
@@ -28,10 +40,13 @@ export type ContactTab = (typeof CONTACT_TABS)[number];
 export const FIELD_LABELS: Record<string, string> = {
   bandName: "Band",
   genre: "Genre",
+  genreSub: "Sub-genre",
+  recording: "Wants a recording",
   members: "Members",
   city: "City",
   zip: "ZIP",
-  manager: "Manager",
+  managerName: "Manager name",
+  manager: "Manager email",
   website: "Website",
   socials: "Socials",
   address: "Address",
@@ -39,8 +54,17 @@ export const FIELD_LABELS: Record<string, string> = {
   skill: "Skill",
 };
 
+/** Detail fields stored as booleans rather than strings. */
+export const BOOLEAN_FIELDS: ReadonlySet<string> = new Set(["recording"]);
+
 export function labelFor(field: string): string {
   return FIELD_LABELS[field] ?? field;
+}
+
+/** Booleans read as "true"/"false" otherwise, which is noise in a table or a sheet. */
+export function formatDetailValue(value: unknown): string {
+  if (typeof value === "boolean") return value ? "Yes" : "No";
+  return value === null || value === undefined ? "" : String(value);
 }
 
 export function tabBySlug(slug: string | undefined): ContactTab {
@@ -52,5 +76,5 @@ export function detailEntries(details: unknown): [string, string][] {
   if (!details || typeof details !== "object" || Array.isArray(details)) return [];
   return Object.entries(details as Record<string, unknown>)
     .filter(([, value]) => value !== null && value !== undefined && String(value) !== "")
-    .map(([key, value]) => [labelFor(key), String(value)]);
+    .map(([key, value]) => [labelFor(key), formatDetailValue(value)]);
 }

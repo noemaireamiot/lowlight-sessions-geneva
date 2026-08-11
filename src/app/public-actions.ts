@@ -1,6 +1,7 @@
 "use server";
 
 import { clientIp } from "@/lib/client-ip";
+import { BOOLEAN_FIELDS } from "@/lib/contact-fields";
 import { publicFormLimiter } from "@/lib/rate-limit";
 import {
   CONTACT_KINDS,
@@ -78,8 +79,14 @@ export async function submitContact(
   if (looksLikeBot(formData)) return { ok: true };
   if (await overLimit("contact")) return { ok: true };
 
-  const details: Record<string, string> = {};
+  const details: Record<string, string | boolean> = {};
   for (const field of detailFieldsFor(kind)) {
+    // A checkbox posts nothing when unchecked, so absence means false. Recorded
+    // either way, so "no" is distinguishable from "never asked" in the admin.
+    if (BOOLEAN_FIELDS.has(field)) {
+      details[field] = formData.get(field) !== null;
+      continue;
+    }
     const value = text(formData, field);
     if (value) details[field] = value;
   }

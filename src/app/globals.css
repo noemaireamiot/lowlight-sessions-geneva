@@ -20,6 +20,23 @@
   --font-serif: var(--font-serif);
 }
 
+html {
+  /* Anchor links glide instead of jumping. */
+  scroll-behavior: smooth;
+}
+
+/* Respect the OS setting for people who get motion sick. */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+}
+
+/* The header is fixed, so an anchor target would otherwise land under it. */
+section[id] {
+  scroll-margin-top: 5rem;
+}
+
 body {
   background: var(--background);
   color: var(--foreground);

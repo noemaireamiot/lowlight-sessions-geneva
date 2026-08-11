@@ -2,7 +2,7 @@ import type { NextRequest } from "next/server";
 import prisma from "@/lib/prisma";
 import { getAdminUser } from "@/lib/admin-auth";
 import { csvResponse, datedFilename, toCsv } from "@/lib/csv";
-import { CONTACT_TABS, labelFor } from "@/lib/contact-fields";
+import { CONTACT_TABS, formatDetailValue, labelFor } from "@/lib/contact-fields";
 
 export async function GET(request: NextRequest) {
   // Route Handlers are public endpoints — the proxy's optimistic check is not
@@ -43,7 +43,7 @@ export async function GET(request: NextRequest) {
           row.lastName,
           row.email,
           row.phone ?? "",
-          ...tab.fields.map((field) => details[field] ?? ""),
+          ...tab.fields.map((field) => formatDetailValue(details[field])),
           row.message ?? "",
           row.handled ? "Handled" : "Open",
         ];
