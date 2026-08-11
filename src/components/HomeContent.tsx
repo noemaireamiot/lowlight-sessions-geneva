@@ -58,8 +58,9 @@ export function HomeContent({
             <a href="#artists" className="hover:text-accent transition-colors">{t.nav.artists}</a>
             <a href="#sessions" className="hover:text-accent transition-colors">{t.nav.sessions}</a>
             <a href="#posters" className="hover:text-accent transition-colors">{t.nav.posters}</a>
-            <a href="#faq" className="hover:text-accent transition-colors">{t.nav.faq}</a>
+            {/* Same order as the sections on the page. */}
             <a href="#contact" className="hover:text-accent transition-colors">{t.nav.contact}</a>
+            <a href="#faq" className="hover:text-accent transition-colors">{t.nav.faq}</a>
           </nav>
           <LanguageSwitcher />
         </div>
@@ -333,8 +334,10 @@ export function HomeContent({
       <section id="posters" className="bg-paper px-6 sm:px-12 py-24">
         <div className="max-w-7xl mx-auto">
           {/* Heading and prose side by side, so the block spans the full measure
-              instead of hugging the left edge. */}
-          <div className="grid gap-8 md:grid-cols-2 md:items-end md:gap-16">
+              instead of hugging the left edge. Aligned at the top: the prose
+              column is taller, and aligning at the bottom pushed the title down
+              into the middle of the section. */}
+          <div className="grid gap-8 md:grid-cols-2 md:items-start md:gap-16">
             <div>
               <p className="text-xs uppercase tracking-[0.3em] text-accent mb-4">
                 {t.posters.eyebrow}
@@ -393,37 +396,40 @@ export function HomeContent({
             <p>{t.contact.intro2}</p>
           </div>
 
-          {/* The three ways to reach us, as cards. */}
-          <div className="mt-10 grid grid-cols-1 gap-4 sm:grid-cols-3">
-            <ChannelCard label={t.contact.channels.emailLabel} href={`mailto:${links.email}`}>
+          {/* Three ways to reach us, as a thin utility strip rather than cards:
+              they sit between two paragraphs and the form, so they should not
+              compete with either. */}
+          <div className="mt-10 grid grid-cols-1 border-y border-foreground/10 divide-y divide-foreground/10 sm:grid-cols-3 sm:divide-x sm:divide-y-0">
+            <Channel label={t.contact.channels.emailLabel} href={`mailto:${links.email}`}>
               <span className="break-all">{links.email}</span>
-            </ChannelCard>
+            </Channel>
 
-            <ChannelCard label={t.contact.channels.signUpLabel} href="#newsletter">
+            <Channel label={t.contact.channels.signUpLabel} href="#newsletter">
               {t.contact.channels.signUpText}
-            </ChannelCard>
+            </Channel>
 
             {/* Not a link itself — it holds two. */}
-            <ChannelCard label={t.contact.channels.followLabel}>
-              <span className="flex flex-wrap items-baseline gap-x-3 gap-y-1">
-                <a
-                  href={links.instagram}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="underline decoration-foreground/20 underline-offset-4 transition-colors hover:text-accent"
-                >
-                  Instagram
-                </a>
-                <a
-                  href={links.youtube}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="underline decoration-foreground/20 underline-offset-4 transition-colors hover:text-accent"
-                >
-                  YouTube
-                </a>
+            <Channel label={t.contact.channels.followLabel}>
+              <a
+                href={links.instagram}
+                target="_blank"
+                rel="noreferrer"
+                className="underline decoration-foreground/25 underline-offset-4 transition-colors hover:text-accent"
+              >
+                Instagram
+              </a>
+              <span aria-hidden className="mx-2 text-foreground/25">
+                ·
               </span>
-            </ChannelCard>
+              <a
+                href={links.youtube}
+                target="_blank"
+                rel="noreferrer"
+                className="underline decoration-foreground/25 underline-offset-4 transition-colors hover:text-accent"
+              >
+                YouTube
+              </a>
+            </Channel>
           </div>
 
           <div className="mt-14">
@@ -463,17 +469,17 @@ export function HomeContent({
         </div>
       </section>
 
-      <Footer />
+      <Footer tone="dark" />
     </div>
   );
 }
 
 /**
- * One way to get in touch. Renders as a link when `href` is given so the whole
- * card is clickable; otherwise a plain box, because a card holding two links
- * cannot itself be an anchor.
+ * One way to get in touch: a label above a single line of content, no box.
+ * Becomes a link when `href` is given so the whole cell is clickable; otherwise a
+ * plain cell, because a cell holding two links cannot itself be an anchor.
  */
-function ChannelCard({
+function Channel({
   label,
   href,
   children,
@@ -482,26 +488,24 @@ function ChannelCard({
   href?: string;
   children: React.ReactNode;
 }) {
+  // No left padding on the first cell, no right padding on the last, so the row
+  // stays flush with the text above it.
   const shell =
-    "group flex h-full flex-col gap-3 rounded-2xl border border-foreground/10 bg-paper/50 p-6 transition-colors";
+    "block py-4 sm:px-6 sm:first:pl-0 sm:last:pr-0 transition-colors";
   const body = (
     <>
-      <span className="text-[0.65rem] uppercase tracking-[0.25em] text-accent">{label}</span>
-      <span className="text-sm leading-relaxed text-foreground/80">{children}</span>
+      <span className="block text-[0.6rem] uppercase tracking-[0.25em] text-accent">
+        {label}
+      </span>
+      <span className="mt-1.5 block text-sm leading-snug text-foreground/75">{children}</span>
     </>
   );
 
   if (!href) return <div className={shell}>{body}</div>;
 
   return (
-    <a href={href} className={`${shell} hover:border-accent/40 hover:bg-paper`}>
+    <a href={href} className={`${shell} group hover:text-accent`}>
       {body}
-      <span
-        aria-hidden
-        className="mt-auto text-accent opacity-0 transition-opacity group-hover:opacity-100"
-      >
-        →
-      </span>
     </a>
   );
 }

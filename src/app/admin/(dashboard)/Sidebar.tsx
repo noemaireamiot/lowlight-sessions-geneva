@@ -4,10 +4,16 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
 
+/**
+ * Sign-ups go to Infomaniak now, so the newsletter page has nothing new to show
+ * and is hidden from the nav. The page, its CSV export and the archived rows are
+ * all still there — reach it directly at /admin/newsletter, or put the entry back
+ * below if it ever becomes useful again.
+ */
 const LINKS = [
   { href: "/admin", label: "Overview" },
   { href: "/admin/events", label: "Events" },
-  { href: "/admin/newsletter", label: "Newsletter" },
+  // { href: "/admin/newsletter", label: "Newsletter" },
   { href: "/admin/requests", label: "Requests" },
   { href: "/admin/users", label: "Admins" },
 ] as const;

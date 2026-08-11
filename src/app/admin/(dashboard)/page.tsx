@@ -10,17 +10,16 @@ export const metadata: Metadata = {
 export default async function OverviewPage() {
   const user = await requireAdmin();
 
-  let stats = { events: 0, published: 0, subscribers: 0, pending: 0 };
+  let stats = { events: 0, published: 0, pending: 0 };
   let unreachable = false;
 
   try {
-    const [events, published, subscribers, pending] = await Promise.all([
+    const [events, published, pending] = await Promise.all([
       prisma.session.count(),
       prisma.session.count({ where: { published: true } }),
-      prisma.newsletterSubscriber.count({ where: { unsubscribed: false } }),
       prisma.contactSubmission.count({ where: { handled: false } }),
     ]);
-    stats = { events, published, subscribers, pending };
+    stats = { events, published, pending };
   } catch (error) {
     console.error("Failed to load dashboard stats:", error);
     unreachable = true;
@@ -40,16 +39,11 @@ export default async function OverviewPage() {
         </p>
       ) : (
         <>
-          {/* No "new subscribers this month": sign-ups go to Infomaniak now, so
-              the figure would sit at zero for ever. */}
-          <div className="grid grid-cols-2 gap-4 lg:grid-cols-3">
+          {/* Nothing about the newsletter here either: it is managed in
+              Infomaniak, and its page is hidden from the nav. */}
+          <div className="grid grid-cols-2 gap-4">
             <StatCard label="Events" value={stats.events} hint={`${stats.published} published`} />
             <StatCard label="Open requests" value={stats.pending} hint="not yet handled" />
-            <StatCard
-              label="Newsletter archive"
-              value={stats.subscribers}
-              hint="before Infomaniak"
-            />
           </div>
 
           <div className="mt-10 flex flex-wrap gap-3">
@@ -57,7 +51,6 @@ export default async function OverviewPage() {
               New event
             </LinkButton>
             <LinkButton href="/admin/requests">Review requests</LinkButton>
-            <LinkButton href="/admin/newsletter">Newsletter</LinkButton>
           </div>
         </>
       )}
