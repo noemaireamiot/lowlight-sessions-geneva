@@ -1,6 +1,6 @@
 {
   "node": {
-    "0007682566edd1177cee00dd455d19e7d193188c02": {
+    "00b2aa9cf189fb83c03f57481ff8c8fd7046a7f379": {
       "workers": {
         "app/admin/(dashboard)/page": {
           "moduleId": 31390,
@@ -12,7 +12,7 @@
       "exportedName": "logout",
       "filename": "src/app/admin/actions.ts"
     },
-    "608c9cb23c75db6ae79c32edee6afd79aa6bb1c355": {
+    "60cb08589caf508a23cb06ee4ccb76ebfc13999035": {
       "workers": {
         "app/admin/(dashboard)/page": {
           "moduleId": 31390,

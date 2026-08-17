@@ -1,3 +1,3 @@
-module.exports=[13380,a=>a.a(async(b,c)=>{try{var d=a.i(12406),e=b([d]);[d]=e.then?(await e)():e,a.s([]),c()}catch(a){c(a)}},!1),31390,a=>a.a(async(b,c)=>{try{var d=a.i(13380),e=a.i(12406),f=b([d,e]);[d,e]=f.then?(await f)():f,a.s(["0007682566edd1177cee00dd455d19e7d193188c02",()=>e.logout,"608c9cb23c75db6ae79c32edee6afd79aa6bb1c355",()=>e.login]),c()}catch(a){c(a)}},!1)];
+module.exports=[13380,a=>a.a(async(b,c)=>{try{var d=a.i(12406),e=b([d]);[d]=e.then?(await e)():e,a.s([]),c()}catch(a){c(a)}},!1),31390,a=>a.a(async(b,c)=>{try{var d=a.i(13380),e=a.i(12406),f=b([d,e]);[d,e]=f.then?(await f)():f,a.s(["00b2aa9cf189fb83c03f57481ff8c8fd7046a7f379",()=>e.logout,"60cb08589caf508a23cb06ee4ccb76ebfc13999035",()=>e.login]),c()}catch(a){c(a)}},!1)];
 
 //# sourceMappingURL=_next-internal_server_app_admin_%28dashboard%29_page_actions_176do11.js.map

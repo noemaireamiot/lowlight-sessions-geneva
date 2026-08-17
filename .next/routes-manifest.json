@@ -12,6 +12,18 @@
       "priority": true,
       "statusCode": 308,
       "regex": "^(?:/((?:[^/]+?)(?:/(?:[^/]+?))*))/$"
+    },
+    {
+      "source": "/fr",
+      "destination": "/",
+      "statusCode": 308,
+      "regex": "^(?!/_next)/fr(?:/)?$"
+    },
+    {
+      "source": "/fr/:path*",
+      "destination": "/:path*",
+      "statusCode": 308,
+      "regex": "^(?!/_next)/fr(?:/((?:[^/]+?)(?:/(?:[^/]+?))*))?(?:/)?$"
     }
   ],
   "headers": [],

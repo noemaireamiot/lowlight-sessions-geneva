@@ -1,6 +1,6 @@
 {
   "node": {
-    "0007682566edd1177cee00dd455d19e7d193188c02": {
+    "00b2aa9cf189fb83c03f57481ff8c8fd7046a7f379": {
       "workers": {
         "app/admin/(dashboard)/events/new/page": {
           "moduleId": 39223,
@@ -12,7 +12,7 @@
       "exportedName": "logout",
       "filename": "src/app/admin/actions.ts"
     },
-    "608c9cb23c75db6ae79c32edee6afd79aa6bb1c355": {
+    "60cb08589caf508a23cb06ee4ccb76ebfc13999035": {
       "workers": {
         "app/admin/(dashboard)/events/new/page": {
           "moduleId": 39223,
@@ -24,7 +24,7 @@
       "exportedName": "login",
       "filename": "src/app/admin/actions.ts"
     },
-    "40a62b699184d4f394d75df9249ec4ed3a92547664": {
+    "4074152e28e795b674be2451d932173789da3ee1dd": {
       "workers": {
         "app/admin/(dashboard)/events/new/page": {
           "moduleId": 39223,
@@ -36,7 +36,7 @@
       "exportedName": "deleteEvent",
       "filename": "src/app/admin/(dashboard)/events/actions.ts"
     },
-    "60fd3890a88fa65f35c5b7f84cbcfc92684fd02f40": {
+    "605f9937f45aa557a101e2374ad3caccee97bf7c0a": {
       "workers": {
         "app/admin/(dashboard)/events/new/page": {
           "moduleId": 39223,
@@ -48,7 +48,7 @@
       "exportedName": "createEvent",
       "filename": "src/app/admin/(dashboard)/events/actions.ts"
     },
-    "705f888133bf517775bda37fd0189ac0bdb49f6e05": {
+    "70f12c1b7df01b8ab625fff321bf6f2c2c4dd0e3ec": {
       "workers": {
         "app/admin/(dashboard)/events/new/page": {
           "moduleId": 39223,

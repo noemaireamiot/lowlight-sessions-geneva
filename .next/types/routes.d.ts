@@ -5,7 +5,7 @@ type AppRoutes = "/" | "/admin" | "/admin/events" | "/admin/events/[id]" | "/adm
 type AppRouteHandlerRoutes = "/admin/media/upload" | "/admin/newsletter/export" | "/admin/requests/export" | "/api/media/[...path]"
 type PageRoutes = never
 type LayoutRoutes = "/" | "/admin"
-type RedirectRoutes = never
+type RedirectRoutes = "/fr" | "/fr/[[...path]]"
 type RewriteRoutes = never
 type Routes = AppRoutes | PageRoutes | LayoutRoutes | RedirectRoutes | RewriteRoutes | AppRouteHandlerRoutes
 
@@ -24,6 +24,8 @@ interface ParamMap {
   "/admin/requests/export": {}
   "/admin/users": {}
   "/api/media/[...path]": { "path": string[]; }
+  "/fr": {}
+  "/fr/[[...path]]": { "path"?: string[]; }
 }
 
 

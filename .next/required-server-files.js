@@ -318,7 +318,19 @@ self.__SERVER_FILES_MANIFEST={
     "turbopack": {
       "root": "/Users/noe/Perso/lowlight-sessions-geneva"
     },
-    "distDirRoot": ".next"
+    "distDirRoot": ".next",
+    "_originalRedirects": [
+      {
+        "source": "/fr",
+        "destination": "/",
+        "permanent": true
+      },
+      {
+        "source": "/fr/:path*",
+        "destination": "/:path*",
+        "permanent": true
+      }
+    ]
   },
   "appDir": "/Users/noe/Perso/lowlight-sessions-geneva",
   "relativeAppDir": "",
